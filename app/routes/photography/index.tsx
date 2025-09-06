@@ -1,7 +1,7 @@
 import type { Route } from "../../+types/root";
 import type {
-    StrapiDestination,
     StrapiResponse,
+    StrapiDestination,
     Destination,
 } from "~/types";
 import { Link } from "react-router";
