@@ -2,19 +2,20 @@ import type { Route } from "../../+types/root";
 import type {
     StrapiResponse,
     StrapiDestination,
-    Destination,
+    DestinationMeta,
 } from "~/types";
 import DestinationTile from "~/components/DestinationTile";
+import PageHeading from "~/components/PageHeading";
 
 type PhotographyPageProps = {
     loaderData: {
-        destinations: Destination[];
+        destinations: DestinationMeta[];
     };
 };
 
 export async function loader({
     request,
-}: Route.LoaderArgs): Promise<{ destinations: Destination[] }> {
+}: Route.LoaderArgs): Promise<{ destinations: DestinationMeta[] }> {
     const res = await fetch(
         `${import.meta.env.VITE_API_URL}/destinations?populate=*`
     );
@@ -27,10 +28,6 @@ export async function loader({
             imageUrl: destination.thumbnail.formats.large.url,
             alternativeText: destination.thumbnail.alternativeText,
         },
-        photos: destination.photos.map(photo => ({
-            imageUrl: photo.formats.large.url,
-            alternativeText: photo.alternativeText,
-        })),
     }));
 
     return { destinations };
@@ -53,14 +50,16 @@ export default function PhotographyPage({
 
     return (
         <>
-            <h1>Photography</h1>
+            <PageHeading heading="Photography" />
 
-            {destinations.map(destination => (
-                <DestinationTile
-                    key={destination.slug}
-                    destination={destination}
-                />
-            ))}
+            <div className="grid grid-cols sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {destinations.map(destination => (
+                    <DestinationTile
+                        key={destination.slug}
+                        destination={destination}
+                    />
+                ))}
+            </div>
         </>
     );
 }

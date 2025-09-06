@@ -15,6 +15,7 @@ export type StrapiDestination = {
         };
     };
     photos: {
+        documentId: string,
         alternativeText: string;
         formats: {
             large: {
@@ -24,15 +25,21 @@ export type StrapiDestination = {
     }[];
 };
 
-export type Destination = {
+export type DestinationMeta = {
     location: string;
-    description: string;
     slug: string;
     thumbnail: {
         imageUrl: string;
         alternativeText: string;
     };
+};
+
+export type Destination = {
+    location: string;
+    description: string;
+    slug: string;
     photos: {
+        documentId: string,
         imageUrl: string;
         alternativeText: string;
     }[];
