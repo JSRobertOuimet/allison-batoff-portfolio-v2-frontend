@@ -4,7 +4,7 @@ import type {
     StrapiDestination,
     Destination,
 } from "~/types";
-import { Link } from "react-router";
+import DestinationTile from "~/components/DestinationTile";
 
 type PhotographyPageProps = {
     loaderData: {
@@ -23,8 +23,14 @@ export async function loader({
         location: destination.location,
         description: destination.description,
         slug: destination.slug,
-        thumbnail: destination.thumbnail,
-        photos: destination.photos,
+        thumbnail: {
+            imageUrl: destination.thumbnail.formats.large.url,
+            alternativeText: destination.thumbnail.alternativeText,
+        },
+        photos: destination.photos.map(photo => ({
+            imageUrl: photo.formats.large.url,
+            alternativeText: photo.alternativeText,
+        })),
     }));
 
     return { destinations };
@@ -50,13 +56,10 @@ export default function PhotographyPage({
             <h1>Photography</h1>
 
             {destinations.map(destination => (
-                <Link key={destination.slug} to={destination.slug}>
-                    <h2>{destination.location}</h2>
-                    <img
-                        src={destination.thumbnail.formats.large.url}
-                        alt={destination.thumbnail.alternativeText}
-                    />
-                </Link>
+                <DestinationTile
+                    key={destination.slug}
+                    destination={destination}
+                />
             ))}
         </>
     );
