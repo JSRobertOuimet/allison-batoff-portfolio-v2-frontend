@@ -1,4 +1,5 @@
 import type { Route } from "../../+types/root";
+import PageHeading from "~/components/PageHeading";
 
 export function meta({}: Route.MetaArgs) {
     return [
@@ -11,5 +12,9 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function DesignPage() {
-    return <h1>Design</h1>;
+    return (
+        <>
+            <PageHeading heading="Design" />
+        </>
+    );
 }
