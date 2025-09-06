@@ -37,10 +37,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <Meta />
                 <Links />
             </head>
-            <body>
+            <body className="h-[100vh]">
                 <Navbar />
                 <main>{children}</main>
-                <Footer/>
+                <Footer />
                 <ScrollRestoration />
                 <Scripts />
             </body>
