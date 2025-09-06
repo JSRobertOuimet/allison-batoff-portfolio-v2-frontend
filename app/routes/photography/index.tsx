@@ -52,7 +52,7 @@ export default function PhotographyPage({
         <>
             <PageHeading heading="Photography" />
 
-            <div className="grid grid-cols sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {destinations.map(destination => (
                     <DestinationTile
                         key={destination.slug}
