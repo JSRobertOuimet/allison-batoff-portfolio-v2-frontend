@@ -10,6 +10,6 @@ export function meta({}: Route.MetaArgs) {
     ];
 }
 
-export default function Design() {
+export default function DesignPage() {
     return <h1>Design</h1>;
 }
