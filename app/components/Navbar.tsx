@@ -5,8 +5,8 @@ const Navbar = () => {
     const activeClassName = "text-gray-900";
 
     return (
-        <nav className=" border-b-1 border-gray-200">
-            <div className="container mx-auto flex justify-between items-center py-4">
+        <nav className="mb-12 border-b-1 border-gray-200">
+            <div className="container mx-auto p-4 flex justify-between items-center">
                 <NavLink to="/">
                     <div className="text-2xl font-light text-gray-900">
                         Allison Batoff
