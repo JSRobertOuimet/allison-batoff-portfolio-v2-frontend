@@ -22,7 +22,6 @@ export async function loader({
     const json: StrapiResponse<StrapiDestination> = await res.json();
     const destinations = json.data.map(destination => ({
         location: destination.location,
-        description: destination.description,
         slug: destination.slug,
         thumbnail: {
             imageUrl: destination.thumbnail.formats.large.url,
