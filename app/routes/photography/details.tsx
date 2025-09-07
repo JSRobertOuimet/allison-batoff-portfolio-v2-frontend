@@ -5,33 +5,48 @@ import type {
     StrapiDestination,
 } from "~/types";
 import PageHeading from "~/components/PageHeading";
+import { Link } from "react-router";
 
 type PhotographyDetailsPageProps = {
     loaderData: {
         destination: Destination;
+        previousDestination: Destination;
+        nextDestination: Destination;
     };
 };
 
 export async function loader({ request, params }: Route.LoaderArgs) {
     const { slug } = params as { slug: string };
     const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/destinations?filters[slug][$eq]=${slug}&populate=*`
+        `${import.meta.env.VITE_API_URL}/destinations?sort=location&populate=*`
     );
     const json: StrapiResponse<StrapiDestination> = await res.json();
-    const item = json.data[0];
 
-    const destination: Destination = {
-        location: item.location,
-        description: item.description,
-        slug: item.slug,
-        photos: item.photos.map(photo => ({
-            documentId: photo.documentId,
+    const destinations = json.data.map(destination => ({
+        location: destination.location,
+        description: destination.description,
+        slug: destination.slug,
+        thumbnail: {
+            imageUrl: destination.thumbnail.formats.large.url,
+            alternativeText: destination.thumbnail.alternativeText,
+        },
+        photos: destination.photos.map(photo => ({
             imageUrl: photo.formats.large.url,
             alternativeText: photo.alternativeText,
         })),
-    };
+    }));
 
-    return { destination };
+    const currentIndex = destinations.findIndex(
+        destination => destination.slug === slug
+    );
+    const destination = destinations[currentIndex];
+    const previousDestination =
+        destinations[currentIndex - 1] ||
+        destinations[destinations.length - 1];
+    const nextDestination =
+        destinations[currentIndex + 1] || destinations[0];
+
+    return { destination, previousDestination, nextDestination };
 }
 
 export function meta({}: Route.MetaArgs) {
@@ -47,7 +62,8 @@ export function meta({}: Route.MetaArgs) {
 const PhotographyDetailsPage = ({
     loaderData,
 }: PhotographyDetailsPageProps) => {
-    const { destination } = loaderData;
+    const { destination, previousDestination, nextDestination } =
+        loaderData;
     return (
         <>
             <PageHeading heading={destination.location} />
@@ -60,6 +76,14 @@ const PhotographyDetailsPage = ({
                     className="w-full mb-12"
                 />
             ))}
+            <nav className="flex justify-between">
+                <Link to={`/photography/${previousDestination.slug}`} className="w-1/2 p-4 hover:bg-gray-100">
+                    {previousDestination.location}
+                </Link>
+                <Link to={`/photography/${nextDestination.slug}`} className="w-1/2 p-4 flex justify-end hover:bg-gray-100">
+                    {nextDestination.location}
+                </Link>
+            </nav>
         </>
     );
 };
