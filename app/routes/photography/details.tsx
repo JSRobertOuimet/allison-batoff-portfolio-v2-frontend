@@ -13,7 +13,7 @@ type PhotographyDetailsPageProps = {
 };
 
 export async function loader({ request, params }: Route.LoaderArgs) {
-    const { slug } = params as {slug: string};
+    const { slug } = params as { slug: string };
     const res = await fetch(
         `${import.meta.env.VITE_API_URL}/destinations?filters[slug][$eq]=${slug}&populate=*`
     );
