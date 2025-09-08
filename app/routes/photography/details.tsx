@@ -6,6 +6,7 @@ import type {
 } from "~/types";
 import PageHeading from "~/components/PageHeading";
 import { Link } from "react-router";
+import Pagination from "~/components/Pagination";
 
 type PhotographyDetailsPageProps = {
     loaderData: {
@@ -76,14 +77,10 @@ const PhotographyDetailsPage = ({
                     className="w-full mb-12"
                 />
             ))}
-            <nav className="flex justify-between">
-                <Link to={`/photography/${previousDestination.slug}`} className="w-1/2 p-4 hover:bg-gray-100">
-                    {previousDestination.location}
-                </Link>
-                <Link to={`/photography/${nextDestination.slug}`} className="w-1/2 p-4 flex justify-end hover:bg-gray-100">
-                    {nextDestination.location}
-                </Link>
-            </nav>
+            <Pagination
+                previousDestination={previousDestination}
+                nextDestination={nextDestination}
+            />
         </>
     );
 };
