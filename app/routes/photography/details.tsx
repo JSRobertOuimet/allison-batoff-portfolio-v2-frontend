@@ -5,7 +5,6 @@ import type {
     StrapiDestination,
 } from "~/types";
 import PageHeading from "~/components/PageHeading";
-import { Link } from "react-router";
 import Pagination from "~/components/Pagination";
 
 type PhotographyDetailsPageProps = {

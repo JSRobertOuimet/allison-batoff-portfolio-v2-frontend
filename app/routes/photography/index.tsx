@@ -4,8 +4,8 @@ import type {
     StrapiDestination,
     DestinationMeta,
 } from "~/types";
-import DestinationTile from "~/components/DestinationTile";
 import PageHeading from "~/components/PageHeading";
+import DestinationTile from "~/components/DestinationTile";
 
 type PhotographyPageProps = {
     loaderData: {

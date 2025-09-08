@@ -1,5 +1,5 @@
-import { Link } from "react-router";
 import type { Destination } from "~/types";
+import { Link } from "react-router";
 
 const Pagination = ({
     previousDestination,

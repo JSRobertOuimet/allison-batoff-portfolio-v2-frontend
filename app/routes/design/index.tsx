@@ -4,7 +4,6 @@ import type {
     StrapiResponse,
     StrapiCaseStudy,
 } from "~/types";
-import { Link } from "react-router";
 import PageHeading from "~/components/PageHeading";
 import CaseStudyTile from "~/components/CaseStudyTile";
 
