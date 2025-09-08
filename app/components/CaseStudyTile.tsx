@@ -3,7 +3,7 @@ import { Link } from "react-router";
 
 const CaseStudyTile = ({ caseStudy }: { caseStudy: CaseStudyMeta }) => {
     return (
-        <Link to={`/design/${caseStudy.slug}`} className="p-4 flex gap-8 outline-transparent hover:outline hover:outline-gray-300 transition duration-500">
+        <Link to={`/design/${caseStudy.slug}`} className="p-4 flex gap-8 outline-transparent hover:outline hover:outline-gray-300 focus:outline focus:outline-gray-300 transition duration-500">
             <img
                 src={caseStudy.thumbnail.imageUrl}
                 alt={caseStudy.thumbnail.alternativeText}
