@@ -1,4 +1,3 @@
-import type { Destination } from "~/types";
 import { Link } from "react-router";
 
 const toSentenceCase = (string: string): string => {
@@ -30,7 +29,7 @@ const Pagination = ({
             <Link
                 key={previousItem.slug}
                 to={`/${subdirectory}/${previousItem.slug}`}
-                className="w-1/2 p-4 flex justify-center border-r border-r-gray-300 hover:bg-gray-100">
+                className="w-1/2 p-4 border-r border-r-gray-200 hover:bg-gray-100">
                 <div className="flex flex-col">
                     <div className="text-sm">Previous</div>
                     <div className="text-2xl">
@@ -41,7 +40,7 @@ const Pagination = ({
             <Link
                 key={nextItem.slug}
                 to={`/${subdirectory}/${nextItem.slug}`}
-                className="w-1/2 p-4 flex justify-center hover:bg-gray-100">
+                className="w-1/2 p-4 flex hover:bg-gray-100">
                 <div className="flex flex-col">
                     <div className="text-sm">Next</div>
                     <div className="text-2xl">
