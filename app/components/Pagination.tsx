@@ -26,14 +26,14 @@ const Pagination = ({
     nextItem: any;
 }) => {
     return (
-        <nav className="flex justify-between">
+        <nav className="max-w-[65ch] mx-auto flex justify-between not-prose">
             <Link
                 key={previousItem.slug}
                 to={`/${subdirectory}/${previousItem.slug}`}
-                className="w-1/2 p-4 flex hover:bg-gray-100">
+                className="w-1/2 p-4 flex justify-center border-r border-r-gray-300 hover:bg-gray-100">
                 <div className="flex flex-col">
                     <div className="text-sm">Previous</div>
-                    <div className="text-2xl">
+                    <div className="font-bold">
                         {toSentenceCase(previousItem.slug)}
                     </div>
                 </div>
@@ -41,10 +41,10 @@ const Pagination = ({
             <Link
                 key={nextItem.slug}
                 to={`/${subdirectory}/${nextItem.slug}`}
-                className="w-1/2 p-4 flex justify-end hover:bg-gray-100">
+                className="w-1/2 p-4 flex justify-center hover:bg-gray-100">
                 <div className="flex flex-col">
                     <div className="text-sm">Next</div>
-                    <div className="text-2xl">
+                    <div className="font-bold">
                         {toSentenceCase(nextItem.slug)}
                     </div>
                 </div>

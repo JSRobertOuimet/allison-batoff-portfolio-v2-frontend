@@ -65,7 +65,7 @@ const PhotographyDetailsPage = ({
     return (
         <>
             <PageHeading heading={destination.location} />
-            <p className="mb-12">{destination.description}</p>
+            <p className="max-w-[65ch] mb-12">{destination.description}</p>
             {destination.photos.map(photo => (
                 <img
                     key={photo.documentId}

@@ -24,10 +24,6 @@ export async function loader({ request, params }: Route.LoaderArgs) {
     );
     const json: StrapiResponse<StrapiCaseStudy> = await res.json();
     const caseStudies = json.data.map(caseStudy => ({
-        thumbnail: {
-            imageUrl: caseStudy.thumbnail.url,
-            alternativeText: caseStudy.thumbnail.alternativeText,
-        },
         title: caseStudy.title,
         slug: caseStudy.slug,
         year: caseStudy.year,
@@ -63,18 +59,11 @@ const DesignDetailsPage = ({
 }: CaseStudyDetailsPageProps) => {
     const { caseStudy, previousCaseStudy, nextCaseStudy } = loaderData;
 
-    console.log(previousCaseStudy);
-
     return (
         <>
-            <img
-                src={caseStudy.thumbnail.imageUrl}
-                alt={caseStudy.thumbnail.alternativeText}
-                className="w-full aspect-16/9 object-cover mb-8"
-            />
-            <div className="w-2/5 mx-auto">
+            <div className="mx-auto prose prose-h2:font-normal prose-h2:mt-0 prose-h2:mb-4 prose-h3:font-normal prose-h3:mt-0">
                 <PageHeading heading={caseStudy.title} />
-                <div className="prose max-w-none mb-12">
+                <div className="mb-12">
                     <Markdown rehypePlugins={[rehypeRaw]}>
                         {caseStudy.body}
                     </Markdown>
