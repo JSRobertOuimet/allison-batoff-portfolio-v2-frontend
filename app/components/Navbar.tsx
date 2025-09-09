@@ -37,8 +37,8 @@ const Navbar = () => {
                                     ? activeClassName
                                     : baseClassName
                             }
-                            to="/photography">
-                            Photography
+                            to="/design">
+                            Design
                         </NavLink>
                     </li>
                     <li className="flex justify-center mr-6">
@@ -48,8 +48,8 @@ const Navbar = () => {
                                     ? activeClassName
                                     : baseClassName
                             }
-                            to="/design">
-                            Design
+                            to="/photography">
+                            Photography
                         </NavLink>
                     </li>
                     <li className="flex justify-center">
@@ -98,9 +98,9 @@ const Navbar = () => {
                                     ? activeClassName
                                     : baseClassName
                             }
-                            to="/photography"
+                            to="/design"
                             onClick={() => setMenuOpen(false)}>
-                            Photography
+                            Design
                         </NavLink>
                     </li>
                     <li className="py-4">
@@ -110,9 +110,9 @@ const Navbar = () => {
                                     ? activeClassName
                                     : baseClassName
                             }
-                            to="/design"
+                            to="/photography"
                             onClick={() => setMenuOpen(false)}>
-                            Design
+                            Photography
                         </NavLink>
                     </li>
                     <li className="py-4">
