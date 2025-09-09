@@ -78,56 +78,58 @@ const Navbar = () => {
             </div>
 
             {menuOpen && (
-                <ul className="md:hidden p-4 border-t-1 border-gray-200">
-                    <li className="py-4">
-                        <NavLink
-                            className={({ isActive }) =>
-                                isActive
-                                    ? activeClassName
-                                    : baseClassName
-                            }
-                            to="/"
-                            onClick={() => setMenuOpen(false)}>
-                            Home
-                        </NavLink>
-                    </li>
-                    <li className="py-4">
-                        <NavLink
-                            className={({ isActive }) =>
-                                isActive
-                                    ? activeClassName
-                                    : baseClassName
-                            }
-                            to="/design"
-                            onClick={() => setMenuOpen(false)}>
-                            Design
-                        </NavLink>
-                    </li>
-                    <li className="py-4">
-                        <NavLink
-                            className={({ isActive }) =>
-                                isActive
-                                    ? activeClassName
-                                    : baseClassName
-                            }
-                            to="/photography"
-                            onClick={() => setMenuOpen(false)}>
-                            Photography
-                        </NavLink>
-                    </li>
-                    <li className="py-4">
-                        <NavLink
-                            className={({ isActive }) =>
-                                isActive
-                                    ? activeClassName
-                                    : baseClassName
-                            }
-                            to="/contact"
-                            onClick={() => setMenuOpen(false)}>
-                            Contact
-                        </NavLink>
-                    </li>
-                </ul>
+                <div className="container mx-auto">
+                    <ul className="md:hidden p-4">
+                        <li className="py-4">
+                            <NavLink
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? activeClassName
+                                        : baseClassName
+                                }
+                                to="/"
+                                onClick={() => setMenuOpen(false)}>
+                                Home
+                            </NavLink>
+                        </li>
+                        <li className="py-4">
+                            <NavLink
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? activeClassName
+                                        : baseClassName
+                                }
+                                to="/design"
+                                onClick={() => setMenuOpen(false)}>
+                                Design
+                            </NavLink>
+                        </li>
+                        <li className="py-4">
+                            <NavLink
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? activeClassName
+                                        : baseClassName
+                                }
+                                to="/photography"
+                                onClick={() => setMenuOpen(false)}>
+                                Photography
+                            </NavLink>
+                        </li>
+                        <li className="py-4">
+                            <NavLink
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? activeClassName
+                                        : baseClassName
+                                }
+                                to="/contact"
+                                onClick={() => setMenuOpen(false)}>
+                                Contact
+                            </NavLink>
+                        </li>
+                    </ul>
+                </div>
             )}
         </nav>
     );

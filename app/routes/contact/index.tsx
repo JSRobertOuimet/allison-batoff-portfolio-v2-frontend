@@ -50,7 +50,9 @@ export default function ContactPage() {
                         where I share what I learn and what inspires me.
                     </p>
                 </div>
-                <form action="" className="md:col-span-6 lg:col-span-4 lg:col-start-8 p-8 border border-gray-300">
+                <form
+                    action=""
+                    className="md:col-span-6 lg:col-span-8 lg:col-start-10 p-8 shadow-2xl">
                     <p className="text-sm mb-4">
                         All fields are required.
                     </p>
@@ -64,7 +66,7 @@ export default function ContactPage() {
                             type="text"
                             name="name"
                             id="name"
-                            className="w-full border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:ring focus:ring-gray-200"
+                            className="w-full border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 user-invalid:border user-invalid:border-red-600"
                             required
                         />
                     </div>
@@ -78,7 +80,7 @@ export default function ContactPage() {
                             type="email"
                             name="email"
                             id="email"
-                            className="w-full border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:ring focus:ring-gray-200"
+                            className="w-full border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 user-invalid:border user-invalid:border-red-600"
                             required
                         />
                     </div>
@@ -92,7 +94,7 @@ export default function ContactPage() {
                             type="text"
                             name="subject"
                             id="subject"
-                            className="w-full border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:ring focus:ring-gray-200"
+                            className="w-full border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 user-invalid:border user-invalid:border-red-600"
                             required
                         />
                     </div>
@@ -106,7 +108,7 @@ export default function ContactPage() {
                             rows={4}
                             name="message"
                             id="message"
-                            className="w-full border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:ring focus:ring-gray-200"
+                            className="w-full border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 user-invalid:border user-invalid:border-red-600"
                             required
                         />
                     </div>
