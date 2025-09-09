@@ -3,9 +3,6 @@ export type StrapiResponse<T> = {
 };
 
 export type StrapiDestination = {
-    location: string;
-    description: string;
-    slug: string;
     thumbnail: {
         alternativeText: string;
         formats: {
@@ -14,6 +11,9 @@ export type StrapiDestination = {
             };
         };
     };
+    location: string;
+    slug: string;
+    description: string;
     photos: {
         documentId: string;
         alternativeText: string;
@@ -26,36 +26,36 @@ export type StrapiDestination = {
 };
 
 export type StrapiCaseStudy = {
-    title: string;
-    description: string;
-    body: string;
-    year: string;
-    slug: string;
-    duration: string;
-    audience: string;
     thumbnail: {
         url: any;
         imageUrl: string;
         alternativeText: string;
     };
+    title: string;
+    slug: string;
+    description: string;
     categories: {
         category: string;
     }[];
+    year: string;
+    duration: string;
+    audience: string;
+    body: string;
 };
 
 export type DestinationMeta = {
-    location: string;
-    slug: string;
     thumbnail: {
         imageUrl: string;
         alternativeText: string;
     };
+    location: string;
+    slug: string;
 };
 
 export type Destination = {
     location: string;
-    description: string;
     slug: string;
+    description: string;
     photos: {
         documentId: string;
         imageUrl: string;
@@ -64,14 +64,28 @@ export type Destination = {
 };
 
 export type CaseStudyMeta = {
-    title: string;
-    description: string;
-    slug: string;
     thumbnail: {
         imageUrl: string;
         alternativeText: string;
     };
+    title: string;
+    slug: string;
+    description: string;
     categories: {
         category: string;
     }[];
+};
+
+export type CaseStudy = {
+    thumbnail: {
+        url: any;
+        imageUrl: string;
+        alternativeText: string;
+    };
+    title: string;
+    slug: string;
+    year: string;
+    duration: string;
+    audience: string;
+    body: string;
 };
