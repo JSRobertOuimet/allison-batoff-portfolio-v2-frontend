@@ -15,8 +15,8 @@ export default function ContactPage() {
     return (
         <>
             <PageHeading heading="Contact" />
-            <div className="flex gap-8">
-                <div className="w-1/2">
+            <div className="grid md:grid-cols-12 gap-4">
+                <div className="md:col-span-6">
                     <p className="mb-4">
                         My name is Allison Batoff and I am a user
                         experience designer based out of Ottawa,
@@ -50,7 +50,7 @@ export default function ContactPage() {
                         where I share what I learn and what inspires me.
                     </p>
                 </div>
-                <form action="" className="w-1/2 p-8 border border-gray-300">
+                <form action="" className="md:col-span-6 lg:col-span-4 lg:col-start-8 p-8 border border-gray-300">
                     <p className="text-sm mb-4">
                         All fields are required.
                     </p>
