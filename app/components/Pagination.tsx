@@ -33,7 +33,7 @@ const Pagination = ({
                 className="w-1/2 p-4 flex justify-center border-r border-r-gray-300 hover:bg-gray-100">
                 <div className="flex flex-col">
                     <div className="text-sm">Previous</div>
-                    <div className="font-bold">
+                    <div className="text-2xl">
                         {toSentenceCase(previousItem.slug)}
                     </div>
                 </div>
@@ -44,7 +44,7 @@ const Pagination = ({
                 className="w-1/2 p-4 flex justify-center hover:bg-gray-100">
                 <div className="flex flex-col">
                     <div className="text-sm">Next</div>
-                    <div className="font-bold">
+                    <div className="text-2xl">
                         {toSentenceCase(nextItem.slug)}
                     </div>
                 </div>
