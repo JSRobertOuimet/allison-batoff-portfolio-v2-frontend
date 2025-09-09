@@ -61,7 +61,7 @@ const DesignDetailsPage = ({
 
     return (
         <>
-            <div className="mx-auto prose prose-h2:font-normal prose-h2:mt-0 prose-h2:mb-4 prose-h3:font-normal prose-h3:mt-0">
+            <div className="mx-auto prose prose-h2:font-normal prose-h2:mt-0 prose-h2:mb-4 prose-h3:font-normal prose-h3:mt-0 prose-blockquote:text-2xl prose-blockquote:font-normal prose-img:border prose-img:border-gray-200">
                 <PageHeading heading={caseStudy.title} />
                 <div className="mb-12">
                     <Markdown rehypePlugins={[rehypeRaw]}>
