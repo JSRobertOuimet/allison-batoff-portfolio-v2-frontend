@@ -1,6 +1,9 @@
+import { useState } from "react";
+import { IoMenuOutline, IoCloseOutline } from "react-icons/io5";
 import { NavLink } from "react-router";
 
 const Navbar = () => {
+    const [menuOpen, setMenuOpen] = useState(false);
     const baseClassName = "text-gray-500 hover:text-gray-900";
     const activeClassName = "text-gray-900";
 
@@ -15,7 +18,7 @@ const Navbar = () => {
                         Photography & Design
                     </div>
                 </NavLink>
-                <ul className="flex">
+                <ul className="hidden md:flex">
                     <li className="flex justify-center mr-6">
                         <NavLink
                             className={({ isActive }) =>
@@ -61,7 +64,71 @@ const Navbar = () => {
                         </NavLink>
                     </li>
                 </ul>
+                <div className="md:hidden flex items-center py-4 pl-4">
+                    <button
+                        className="cursor-pointer text-2xl"
+                        onClick={() => setMenuOpen(!menuOpen)}>
+                        {menuOpen ? (
+                            <IoCloseOutline />
+                        ) : (
+                            <IoMenuOutline />
+                        )}
+                    </button>
+                </div>
             </div>
+
+            {menuOpen && (
+                <ul className="md:hidden p-4 border-t-1 border-gray-200">
+                    <li className="py-4">
+                        <NavLink
+                            className={({ isActive }) =>
+                                isActive
+                                    ? activeClassName
+                                    : baseClassName
+                            }
+                            to="/"
+                            onClick={() => setMenuOpen(false)}>
+                            Home
+                        </NavLink>
+                    </li>
+                    <li className="py-4">
+                        <NavLink
+                            className={({ isActive }) =>
+                                isActive
+                                    ? activeClassName
+                                    : baseClassName
+                            }
+                            to="/photography"
+                            onClick={() => setMenuOpen(false)}>
+                            Photography
+                        </NavLink>
+                    </li>
+                    <li className="py-4">
+                        <NavLink
+                            className={({ isActive }) =>
+                                isActive
+                                    ? activeClassName
+                                    : baseClassName
+                            }
+                            to="/design"
+                            onClick={() => setMenuOpen(false)}>
+                            Design
+                        </NavLink>
+                    </li>
+                    <li className="py-4">
+                        <NavLink
+                            className={({ isActive }) =>
+                                isActive
+                                    ? activeClassName
+                                    : baseClassName
+                            }
+                            to="/contact"
+                            onClick={() => setMenuOpen(false)}>
+                            Contact
+                        </NavLink>
+                    </li>
+                </ul>
+            )}
         </nav>
     );
 };
