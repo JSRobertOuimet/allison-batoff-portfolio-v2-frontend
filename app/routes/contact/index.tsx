@@ -15,7 +15,7 @@ export default function ContactPage() {
     return (
         <>
             <PageHeading heading="Contact" />
-            <div className="grid md:grid-cols-12 gap-4">
+            <div className="grid md:grid-cols-12 gap-8">
                 <div className="md:col-span-6">
                     <p className="mb-4">
                         My name is Allison Batoff and I am a user
