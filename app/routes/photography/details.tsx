@@ -21,7 +21,6 @@ export async function loader({ request, params }: Route.LoaderArgs) {
         `${import.meta.env.VITE_API_URL}/destinations?sort=location&populate=*`
     );
     const json: StrapiResponse<StrapiDestination> = await res.json();
-
     const destinations = json.data.map(destination => ({
         location: destination.location,
         description: destination.description,
@@ -35,7 +34,6 @@ export async function loader({ request, params }: Route.LoaderArgs) {
             alternativeText: photo.alternativeText,
         })),
     }));
-
     const currentIndex = destinations.findIndex(
         destination => destination.slug === slug
     );
@@ -77,8 +75,9 @@ const PhotographyDetailsPage = ({
                 />
             ))}
             <Pagination
-                previousDestination={previousDestination}
-                nextDestination={nextDestination}
+                subdirectory="photography"
+                previousItem={previousDestination}
+                nextItem={nextDestination}
             />
         </>
     );

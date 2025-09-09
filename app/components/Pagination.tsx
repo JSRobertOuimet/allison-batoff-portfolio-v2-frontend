@@ -1,34 +1,51 @@
 import type { Destination } from "~/types";
 import { Link } from "react-router";
 
+const toSentenceCase = (string: string): string => {
+    const spacedStr = string.replace(/-/g, " ");
+    const titleCaseWords = spacedStr.split(" ").map(word => {
+        if (word.length === 0) {
+            return "";
+        }
+
+        return (
+            word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        );
+    });
+
+    return titleCaseWords.join(" ");
+};
+
 const Pagination = ({
-    previousDestination,
-    nextDestination,
+    subdirectory,
+    previousItem,
+    nextItem,
 }: {
-    previousDestination: Destination;
-    nextDestination: Destination;
+    subdirectory: string;
+    previousItem: any;
+    nextItem: any;
 }) => {
     return (
         <nav className="flex justify-between">
             <Link
-                key={previousDestination.slug}
-                to={`/photography/${previousDestination.slug}`}
+                key={previousItem.slug}
+                to={`/${subdirectory}/${previousItem.slug}`}
                 className="w-1/2 p-4 flex hover:bg-gray-100">
                 <div className="flex flex-col">
                     <div className="text-sm">Previous</div>
                     <div className="text-2xl">
-                        {previousDestination.location}
+                        {toSentenceCase(previousItem.slug)}
                     </div>
                 </div>
             </Link>
             <Link
-                key={nextDestination.slug}
-                to={`/photography/${nextDestination.slug}`}
+                key={nextItem.slug}
+                to={`/${subdirectory}/${nextItem.slug}`}
                 className="w-1/2 p-4 flex justify-end hover:bg-gray-100">
                 <div className="flex flex-col">
                     <div className="text-sm">Next</div>
                     <div className="text-2xl">
-                        {nextDestination.location}
+                        {toSentenceCase(nextItem.slug)}
                     </div>
                 </div>
             </Link>
