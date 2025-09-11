@@ -6,6 +6,7 @@ import type {
 } from "~/types";
 import PageHeading from "~/components/PageHeading";
 import CaseStudyTile from "~/components/CaseStudyTile";
+import { requireAuth } from "~/utils/auth.server";
 
 type DesignPageProps = {
     loaderData: {
@@ -16,6 +17,8 @@ type DesignPageProps = {
 export async function loader({
     request,
 }: Route.LoaderArgs): Promise<{ caseStudies: CaseStudyMeta[] }> {
+    await requireAuth(request);
+
     const res = await fetch(
         `${import.meta.env.VITE_API_URL}/case-studies?sort=year:desc&populate=*`
     );
@@ -29,8 +32,8 @@ export async function loader({
             alternativeText: caseStudy.thumbnail.alternativeText,
         },
         categories: caseStudy.categories.map(category => ({
-            category: category.category
-        }))
+            category: category.category,
+        })),
     }));
 
     return { caseStudies };
@@ -54,7 +57,10 @@ export default function DesignPage({ loaderData }: DesignPageProps) {
 
             <div className="grid grid-cols gap-8">
                 {caseStudies.map(caseStudy => (
-                    <CaseStudyTile key={caseStudy.slug} caseStudy={caseStudy} />
+                    <CaseStudyTile
+                        key={caseStudy.slug}
+                        caseStudy={caseStudy}
+                    />
                 ))}
             </div>
         </>

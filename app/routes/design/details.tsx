@@ -8,6 +8,7 @@ import PageHeading from "~/components/PageHeading";
 import Markdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import Pagination from "~/components/Pagination";
+import { requireAuth } from "~/utils/auth.server";
 
 type CaseStudyDetailsPageProps = {
     loaderData: {
@@ -19,6 +20,9 @@ type CaseStudyDetailsPageProps = {
 
 export async function loader({ request, params }: Route.LoaderArgs) {
     const { slug } = params as { slug: string };
+
+    await requireAuth(request);
+
     const res = await fetch(
         `${import.meta.env.VITE_API_URL}/case-studies?sort=year:desc&populate=*`
     );

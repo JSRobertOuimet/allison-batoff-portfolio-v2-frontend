@@ -17,6 +17,7 @@ type PhotographyDetailsPageProps = {
 
 export async function loader({ request, params }: Route.LoaderArgs) {
     const { slug } = params as { slug: string };
+
     const res = await fetch(
         `${import.meta.env.VITE_API_URL}/destinations?sort=location&populate=*`
     );
@@ -65,7 +66,9 @@ const PhotographyDetailsPage = ({
     return (
         <>
             <PageHeading heading={destination.location} />
-            <p className="max-w-[65ch] mb-12">{destination.description}</p>
+            <p className="max-w-[65ch] mb-12">
+                {destination.description}
+            </p>
             {destination.photos.map(photo => (
                 <img
                     key={photo.documentId}
