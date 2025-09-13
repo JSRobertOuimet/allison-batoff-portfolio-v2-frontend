@@ -1,5 +1,103 @@
 import type { Route } from "../../+types/root";
+import { useActionData, Form, useNavigation } from "react-router";
+import { useEffect, useRef } from "react";
 import PageHeading from "~/components/PageHeading";
+
+export async function action({ request }: { request: Request }) {
+    if (request.method !== "POST") {
+        return { error: "Method not allowed" };
+    }
+
+    try {
+        const formData = await request.formData();
+        const name = formData.get("name") as string;
+        const email = formData.get("email") as string;
+        const subject = formData.get("subject") as string;
+        const message = formData.get("message") as string;
+
+        if (!process.env.RESEND_API_KEY) {
+            console.error(
+                "RESEND_API_KEY environment variable is not set"
+            );
+            return { error: "Email service not configured." };
+        }
+
+        const { Resend } = await import("resend");
+        const resend = new Resend(process.env.RESEND_API_KEY);
+        const result = await resend.emails.send({
+            from: "Allison Batoff <noreply@allisonbatoff.com>",
+            to: "allisonbatoff@gmail.com",
+            replyTo: email,
+            subject: `Contact Form: ${subject || "New Message"}`,
+            html: `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="utf-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Contact Form Submission</title>
+                </head>
+                <body style="margin: 0; padding: 0; background-color: #ffffff; font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;">
+                    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+                        <!-- Header -->
+                        <div style="padding: 32px 32px 0 32px;">
+                            <h1 style="font-size: 24px; font-weight: 600; color: #111827; margin: 0 0 32px 0; line-height: 1.2;">
+                                New Contact Form Submission
+                            </h1>
+                        </div>
+                        
+                        <!-- Content -->
+                        <div style="padding: 0 32px 32px 32px;">
+                            <!-- Contact Info Card -->
+                            <div style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 24px; margin-bottom: 24px;">
+                                <div style="margin-bottom: 16px;">
+                                    <p style="margin: 0 0 8px 0; font-size: 14px; font-weight: 600; color: #374151; text-transform: uppercase; letter-spacing: 0.05em;">Name</p>
+                                    <p style="margin: 0; font-size: 16px; color: #111827;">${name}</p>
+                                </div>
+                                <div style="margin-bottom: 16px;">
+                                    <p style="margin: 0 0 8px 0; font-size: 14px; font-weight: 600; color: #374151; text-transform: uppercase; letter-spacing: 0.05em;">Email</p>
+                                    <p style="margin: 0; font-size: 16px; color: #111827;">
+                                        <a href="mailto:${email}" style="color: #111827; text-decoration: underline; text-decoration-color: #d1d5db; text-underline-offset: 2px;">${email}</a>
+                                    </p>
+                                </div>
+                                <div>
+                                    <p style="margin: 0 0 8px 0; font-size: 14px; font-weight: 600; color: #374151; text-transform: uppercase; letter-spacing: 0.05em;">Subject</p>
+                                    <p style="margin: 0; font-size: 16px; color: #111827;">${subject || "No subject provided"}</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Message -->
+                            <div style="margin-bottom: 32px;">
+                                <h3 style="font-size: 18px; font-weight: 600; color: #111827; margin: 0 0 16px 0;">Message</h3>
+                                <div style="background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 24px; white-space: pre-wrap; font-size: 16px; line-height: 1.6; color: #374151;">${message}</div>
+                            </div>
+                            
+                            <!-- Footer -->
+                            <div style="border-top: 1px solid #e5e7eb; padding-top: 24px;">
+                                <p style="margin: 0; font-size: 14px; color: #6b7280; text-align: center;">
+                                    This message was sent from the contact form on 
+                                    <a href="https://allisonbatoff.com" style="color: #111827; text-decoration: underline; text-decoration-color: #d1d5db; text-underline-offset: 2px;">allisonbatoff.com</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </body>
+                </html>
+            `,
+        });
+
+        return { success: true };
+    } catch (error) {
+        console.error("Email sending failed:", error);
+        return {
+            error: "Failed to send email.",
+            details:
+                error instanceof Error
+                    ? error.message
+                    : "Unknown error",
+        };
+    }
+}
 
 export function meta({}: Route.MetaArgs) {
     return [
@@ -12,6 +110,20 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function ContactPage() {
+    const data = useActionData() as {
+        success?: boolean;
+        error?: string;
+        details?: string;
+    };
+    const navigation = useNavigation();
+    const formRef = useRef<HTMLFormElement>(null);
+
+    useEffect(() => {
+        if (data?.success && formRef.current) {
+            formRef.current.reset();
+        }
+    }, [data?.success]);
+
     return (
         <>
             <PageHeading heading="Contact" />
@@ -23,7 +135,7 @@ export default function ContactPage() {
                         Ontario.
                     </p>
                     <p className="mb-4">
-                        When I’m away from my desk I love to travel and
+                        When I'm away from my desk I love to travel and
                         to capture the places I visit through
                         photography.
                     </p>
@@ -50,72 +162,83 @@ export default function ContactPage() {
                         where I share what I learn and what inspires me.
                     </p>
                 </div>
-                <form
-                    action=""
-                    className="md:col-span-6 xl:col-span-4 xl:col-start-9 p-8 shadow-2xl">
+                <div className="md:col-span-6 xl:col-span-4 xl:col-start-9 p-8 shadow-2xl">
+                    {data?.success && (
+                        <div className="mb-4 p-4 bg-green-100 text-green-900">
+                            Message sent successfully!
+                        </div>
+                    )}
                     <p className="text-sm mb-4">
                         All fields are required.
                     </p>
-                    <div className="mb-4">
-                        <label
-                            htmlFor="name"
-                            className="block mb-1 font-bold">
-                            Name
-                        </label>
-                        <input
-                            type="text"
-                            name="name"
-                            id="name"
-                            className="w-full border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 user-invalid:border user-invalid:border-red-600"
-                            required
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label
-                            htmlFor="email"
-                            className="block mb-1 font-bold">
-                            Email address
-                        </label>
-                        <input
-                            type="email"
-                            name="email"
-                            id="email"
-                            className="w-full border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 user-invalid:border user-invalid:border-red-600"
-                            required
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label
-                            htmlFor="subject"
-                            className="block mb-1 font-bold">
-                            Subject
-                        </label>
-                        <input
-                            type="text"
-                            name="subject"
-                            id="subject"
-                            className="w-full border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 user-invalid:border user-invalid:border-red-600"
-                            required
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label
-                            htmlFor="message"
-                            className="block mb-1 font-bold">
-                            Message
-                        </label>
-                        <textarea
-                            rows={4}
-                            name="message"
-                            id="message"
-                            className="w-full border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 user-invalid:border user-invalid:border-red-600"
-                            required
-                        />
-                    </div>
-                    <button className="bg-gray-950 hover:bg-gray-800 text-white font-bold py-2 px-4 cursor-pointer">
-                        Submit
-                    </button>
-                </form>
+                    <Form method="post" ref={formRef}>
+                        <div className="mb-4">
+                            <label
+                                htmlFor="name"
+                                className="block mb-1 font-bold">
+                                Name
+                            </label>
+                            <input
+                                type="text"
+                                name="name"
+                                id="name"
+                                className="w-full border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 user-invalid:border user-invalid:border-red-600"
+                                required
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label
+                                htmlFor="email"
+                                className="block mb-1 font-bold">
+                                Email address
+                            </label>
+                            <input
+                                type="email"
+                                name="email"
+                                id="email"
+                                className="w-full border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 user-invalid:border user-invalid:border-red-600"
+                                required
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label
+                                htmlFor="subject"
+                                className="block mb-1 font-bold">
+                                Subject
+                            </label>
+                            <input
+                                type="text"
+                                name="subject"
+                                id="subject"
+                                className="w-full border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 user-invalid:border user-invalid:border-red-600"
+                                required
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label
+                                htmlFor="message"
+                                className="block mb-1 font-bold">
+                                Message
+                            </label>
+                            <textarea
+                                rows={4}
+                                name="message"
+                                id="message"
+                                className="w-full border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 user-invalid:border user-invalid:border-red-600"
+                                required
+                            />
+                        </div>
+                        <button
+                            className="bg-gray-950 hover:bg-gray-800 text-white font-bold py-2 px-4 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                            disabled={
+                                navigation.state === "submitting"
+                            }>
+                            {navigation.state === "submitting"
+                                ? "Sending..."
+                                : "Submit"}
+                        </button>
+                    </Form>
+                </div>
             </div>
         </>
     );
