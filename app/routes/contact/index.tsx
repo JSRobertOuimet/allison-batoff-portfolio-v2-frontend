@@ -1,11 +1,13 @@
 import type { Route } from "../../+types/root";
-import { useActionData, Form, useNavigation } from "react-router";
 import { useEffect, useRef } from "react";
+import { useActionData, Form, useNavigation } from "react-router";
+import { Resend } from "resend";
+import { emailTemplate } from "~/utils/emailTemplate";
 import PageHeading from "~/components/PageHeading";
 
 export async function action({ request }: { request: Request }) {
     if (request.method !== "POST") {
-        return { error: "Method not allowed" };
+        return { error: "Method not allowed." };
     }
 
     try {
@@ -14,81 +16,18 @@ export async function action({ request }: { request: Request }) {
         const email = formData.get("email") as string;
         const subject = formData.get("subject") as string;
         const message = formData.get("message") as string;
-
-        if (!process.env.RESEND_API_KEY) {
-            console.error(
-                "RESEND_API_KEY environment variable is not set"
-            );
-            return { error: "Email service not configured." };
-        }
-
-        const { Resend } = await import("resend");
         const resend = new Resend(process.env.RESEND_API_KEY);
-        const result = await resend.emails.send({
-            from: "Allison Batoff <noreply@allisonbatoff.com>",
-            to: "allisonbatoff@gmail.com",
+
+        await resend.emails.send({
+            from: `${process.env.EMAIL_FROM}`,
+            to: `${process.env.EMAIL_TO}`,
             replyTo: email,
-            subject: `Contact Form: ${subject || "New Message"}`,
-            html: `
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <meta charset="utf-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Contact Form Submission</title>
-                </head>
-                <body style="margin: 0; padding: 0; background-color: #ffffff; font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;">
-                    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
-                        <!-- Header -->
-                        <div style="padding: 32px 32px 0 32px;">
-                            <h1 style="font-size: 24px; font-weight: 600; color: #111827; margin: 0 0 32px 0; line-height: 1.2;">
-                                New Contact Form Submission
-                            </h1>
-                        </div>
-                        
-                        <!-- Content -->
-                        <div style="padding: 0 32px 32px 32px;">
-                            <!-- Contact Info Card -->
-                            <div style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 24px; margin-bottom: 24px;">
-                                <div style="margin-bottom: 16px;">
-                                    <p style="margin: 0 0 8px 0; font-size: 14px; font-weight: 600; color: #374151; text-transform: uppercase; letter-spacing: 0.05em;">Name</p>
-                                    <p style="margin: 0; font-size: 16px; color: #111827;">${name}</p>
-                                </div>
-                                <div style="margin-bottom: 16px;">
-                                    <p style="margin: 0 0 8px 0; font-size: 14px; font-weight: 600; color: #374151; text-transform: uppercase; letter-spacing: 0.05em;">Email</p>
-                                    <p style="margin: 0; font-size: 16px; color: #111827;">
-                                        <a href="mailto:${email}" style="color: #111827; text-decoration: underline; text-decoration-color: #d1d5db; text-underline-offset: 2px;">${email}</a>
-                                    </p>
-                                </div>
-                                <div>
-                                    <p style="margin: 0 0 8px 0; font-size: 14px; font-weight: 600; color: #374151; text-transform: uppercase; letter-spacing: 0.05em;">Subject</p>
-                                    <p style="margin: 0; font-size: 16px; color: #111827;">${subject || "No subject provided"}</p>
-                                </div>
-                            </div>
-                            
-                            <!-- Message -->
-                            <div style="margin-bottom: 32px;">
-                                <h3 style="font-size: 18px; font-weight: 600; color: #111827; margin: 0 0 16px 0;">Message</h3>
-                                <div style="background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 24px; white-space: pre-wrap; font-size: 16px; line-height: 1.6; color: #374151;">${message}</div>
-                            </div>
-                            
-                            <!-- Footer -->
-                            <div style="border-top: 1px solid #e5e7eb; padding-top: 24px;">
-                                <p style="margin: 0; font-size: 14px; color: #6b7280; text-align: center;">
-                                    This message was sent from the contact form on 
-                                    <a href="https://allisonbatoff.com" style="color: #111827; text-decoration: underline; text-decoration-color: #d1d5db; text-underline-offset: 2px;">allisonbatoff.com</a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </body>
-                </html>
-            `,
+            subject: subject,
+            html: emailTemplate({ name, email, message }),
         });
 
         return { success: true };
     } catch (error) {
-        console.error("Email sending failed:", error);
         return {
             error: "Failed to send email.",
             details:
