@@ -1,12 +1,12 @@
 import { redirect } from "react-router";
-import { config } from "../../src/config/environment";
+import { config } from "../config/environment";
 
 export async function requireAuth(request: Request): Promise<void> {
     try {
         const authRes = await fetch(`${config.API_URL}/cookies`, {
             headers: {
                 Cookie: request.headers.get("cookie") ?? "",
-                "X-Requested-With": "XMLHttpRequest", // CSRF protection
+                "X-Requested-With": "XMLHttpRequest",
             },
             credentials: "include",
         });
@@ -16,14 +16,12 @@ export async function requireAuth(request: Request): Promise<void> {
             throw redirect(`/login?redirectTo=${url.pathname}`);
         }
 
-        // Additional validation - check if response is valid JSON
         const data = await authRes.json();
         if (!data.authorized) {
             const url = new URL(request.url);
             throw redirect(`/login?redirectTo=${url.pathname}`);
         }
     } catch (error) {
-        // If there's any error in the auth check, redirect to login
         const url = new URL(request.url);
         throw redirect(`/login?redirectTo=${url.pathname}`);
     }
