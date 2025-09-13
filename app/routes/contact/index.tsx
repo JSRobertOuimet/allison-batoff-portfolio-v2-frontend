@@ -52,7 +52,7 @@ export default function ContactPage() {
                 </div>
                 <form
                     action=""
-                    className="md:col-span-6 lg:col-span-8 lg:col-start-10 p-8 shadow-2xl">
+                    className="md:col-span-6 xl:col-span-4 xl:col-start-9 p-8 shadow-2xl">
                     <p className="text-sm mb-4">
                         All fields are required.
                     </p>
