@@ -10,7 +10,7 @@ const Pagination = ({
     nextItem: any;
 }) => {
     return (
-        <nav className="max-w-[65ch] mx-auto flex justify-between not-prose">
+        <nav className="flex justify-between not-prose">
             <Link
                 key={previousItem.slug}
                 to={`/${subdirectory}/${previousItem.slug}`}
