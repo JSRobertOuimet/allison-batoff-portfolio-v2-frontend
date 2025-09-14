@@ -1,20 +1,5 @@
 import { Link } from "react-router";
 
-const toSentenceCase = (string: string): string => {
-    const spacedStr = string.replace(/-/g, " ");
-    const titleCaseWords = spacedStr.split(" ").map(word => {
-        if (word.length === 0) {
-            return "";
-        }
-
-        return (
-            word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-        );
-    });
-
-    return titleCaseWords.join(" ");
-};
-
 const Pagination = ({
     subdirectory,
     previousItem,
@@ -32,9 +17,7 @@ const Pagination = ({
                 className="w-1/2 p-4 border-r border-r-gray-200 hover:bg-gray-100">
                 <div className="flex flex-col">
                     <div className="text-sm">Previous</div>
-                    <div className="text-2xl">
-                        {toSentenceCase(previousItem.slug)}
-                    </div>
+                    <div className="text-2xl">{previousItem.title}</div>
                 </div>
             </Link>
             <Link
@@ -44,7 +27,7 @@ const Pagination = ({
                 <div className="flex flex-col">
                     <div className="text-sm text-right">Next</div>
                     <div className="text-2xl text-right">
-                        {toSentenceCase(nextItem.slug)}
+                        {nextItem.title}
                     </div>
                 </div>
             </Link>
