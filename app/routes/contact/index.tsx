@@ -4,6 +4,10 @@ import { useActionData, Form, useNavigation } from "react-router";
 import { Resend } from "resend";
 import { emailTemplate } from "~/utils/emailTemplate";
 import PageHeading from "~/components/PageHeading";
+import Input from "~/components/Input";
+import TextArea from "~/components/TextArea";
+import SubmitButton from "~/components/SubmitButton";
+import Alert from "~/components/Alert";
 
 export async function action({ request }: { request: Request }) {
     if (request.method !== "POST") {
@@ -54,7 +58,7 @@ export default function ContactPage() {
         error?: string;
         details?: string;
     };
-    const navigation = useNavigation();
+    const navigation = useNavigation().state;
     const formRef = useRef<HTMLFormElement>(null);
 
     useEffect(() => {
@@ -103,79 +107,31 @@ export default function ContactPage() {
                 </div>
                 <div className="md:col-span-6 xl:col-span-4 xl:col-start-9 p-8 shadow-2xl">
                     {data?.success && (
-                        <div className="mb-4 p-4 bg-green-100 text-green-900">
-                            Message sent successfully!
-                        </div>
+                        <Alert
+                            type="success"
+                            message="Message sent successfully!"
+                        />
                     )}
                     <p className="text-sm mb-4">
                         All fields are required.
                     </p>
                     <Form method="post" ref={formRef}>
-                        <div className="mb-4">
-                            <label
-                                htmlFor="name"
-                                className="block mb-1 font-bold">
-                                Name
-                            </label>
-                            <input
-                                type="text"
-                                name="name"
-                                id="name"
-                                className="w-full border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 user-invalid:border user-invalid:border-red-600"
-                                required
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label
-                                htmlFor="email"
-                                className="block mb-1 font-bold">
-                                Email address
-                            </label>
-                            <input
-                                type="email"
-                                name="email"
-                                id="email"
-                                className="w-full border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 user-invalid:border user-invalid:border-red-600"
-                                required
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label
-                                htmlFor="subject"
-                                className="block mb-1 font-bold">
-                                Subject
-                            </label>
-                            <input
-                                type="text"
-                                name="subject"
-                                id="subject"
-                                className="w-full border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 user-invalid:border user-invalid:border-red-600"
-                                required
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label
-                                htmlFor="message"
-                                className="block mb-1 font-bold">
-                                Message
-                            </label>
-                            <textarea
-                                rows={4}
-                                name="message"
-                                id="message"
-                                className="w-full border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 user-invalid:border user-invalid:border-red-600"
-                                required
-                            />
-                        </div>
-                        <button
-                            className="bg-gray-950 hover:bg-gray-800 text-white font-bold py-2 px-4 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                            disabled={
-                                navigation.state === "submitting"
-                            }>
-                            {navigation.state === "submitting"
-                                ? "Sending..."
-                                : "Submit"}
-                        </button>
+                        <Input type="text" label="Name" id="name" />
+                        <Input
+                            type="email"
+                            label="Email address"
+                            id="email"
+                        />
+                        <Input
+                            type="text"
+                            label="Subject"
+                            id="subject"
+                        />
+                        <TextArea label="Message" id="message" />
+                        <SubmitButton
+                            state={navigation}
+                            label="Submit"
+                        />
                     </Form>
                 </div>
             </div>
