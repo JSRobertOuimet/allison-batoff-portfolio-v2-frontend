@@ -11,7 +11,7 @@ export type StrapiDestination = {
             };
         };
     };
-    location: string;
+    title: string;
     slug: string;
     description: string;
     photos: {
@@ -48,12 +48,12 @@ export type DestinationMeta = {
         imageUrl: string;
         alternativeText: string;
     };
-    location: string;
+    title: string;
     slug: string;
 };
 
 export type Destination = {
-    location: string;
+    title: string;
     slug: string;
     description: string;
     photos: {

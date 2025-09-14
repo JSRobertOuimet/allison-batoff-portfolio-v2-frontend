@@ -19,11 +19,11 @@ export async function loader({ request, params }: Route.LoaderArgs) {
     const { slug } = params as { slug: string };
 
     const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/destinations?sort=location&populate=*`
+        `${import.meta.env.VITE_API_URL}/destinations?sort=title&populate=*`
     );
     const json: StrapiResponse<StrapiDestination> = await res.json();
     const destinations = json.data.map(destination => ({
-        location: destination.location,
+        title: destination.title,
         description: destination.description,
         slug: destination.slug,
         thumbnail: {
@@ -65,23 +65,25 @@ const PhotographyDetailsPage = ({
         loaderData;
     return (
         <>
-            <PageHeading heading={destination.location} />
-            <p className="max-w-[65ch] mb-12">
-                {destination.description}
-            </p>
-            {destination.photos.map(photo => (
-                <img
-                    key={photo.documentId}
-                    src={photo.imageUrl}
-                    alt={photo.alternativeText}
-                    className="w-full mb-12"
-                />
-            ))}
-            <Pagination
-                subdirectory="photography"
-                previousItem={previousDestination}
-                nextItem={nextDestination}
-            />
+            <PageHeading heading={destination.title} />
+            <div className="grid lg:grid-cols-12 gap-8">
+                <p className="lg:col-span-4">{destination.description}</p>
+                <div className="lg:col-span-8">
+                    {destination.photos.map(photo => (
+                        <img
+                            key={photo.documentId}
+                            src={photo.imageUrl}
+                            alt={photo.alternativeText}
+                            className="w-full mb-12"
+                        />
+                    ))}
+                    <Pagination
+                        subdirectory="photography"
+                        previousItem={previousDestination}
+                        nextItem={nextDestination}
+                    />
+                </div>
+            </div>
         </>
     );
 };
