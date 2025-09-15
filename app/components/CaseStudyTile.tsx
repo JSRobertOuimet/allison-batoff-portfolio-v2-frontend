@@ -5,7 +5,7 @@ const CaseStudyTile = ({ caseStudy }: { caseStudy: CaseStudyMeta }) => {
     return (
         <Link
             to={`/design/${caseStudy.slug}`}
-            className="flex flex-col md:flex-row p-4 gap-8 outline-transparent hover:outline hover:outline-gray-300 focus:outline focus:outline-gray-300 transition duration-500 group">
+            className="flex flex-col md:flex-row p-4 gap-8 outline outline-gray-300 lg:outline-transparent lg:hover:outline lg:hover:outline-gray-300 lg:focus:outline lg:focus:outline-gray-300 transition duration-500 group">
             <img
                 src={caseStudy.thumbnail.imageUrl}
                 alt={caseStudy.thumbnail.alternativeText}
@@ -23,7 +23,7 @@ const CaseStudyTile = ({ caseStudy }: { caseStudy: CaseStudyMeta }) => {
                         style={
                             { ["--i" as any]: i } as React.CSSProperties
                         }
-                        className="inline-block mr-2 mb-2 px-2 py-1 rounded-full border-1 border-gray-300 text-sm opacity-0 transition-all duration-300 delay-[calc(var(--i)*90ms)] group-hover:opacity-100 group-focus:opacity-100">
+                        className="inline-block mr-2 mb-2 px-2 py-1 rounded-full border-1 border-gray-300 text-sm lg:opacity-0 transition-all duration-300 delay-[calc(var(--i)*90ms)] group-hover:opacity-100 group-focus:opacity-100">
                         {category.category}
                     </div>
                 ))}

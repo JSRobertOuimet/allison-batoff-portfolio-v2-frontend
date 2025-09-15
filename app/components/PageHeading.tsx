@@ -1,9 +1,18 @@
 interface PageHeadingProps {
     heading?: string;
+    alignment?: string;
 }
 
-const PageHeading = ({ heading = "Heading" }: PageHeadingProps) => {
-    return <h1 className="text-3xl mb-8 not-prose">{heading}</h1>;
+const PageHeading = ({
+    heading = "Heading",
+    alignment,
+}: PageHeadingProps) => {
+    return (
+        <h1
+            className={`mb-8 ${alignment === "centered" ? "text-center" : ""} text-3xl text-balance not-prose`}>
+            {heading}
+        </h1>
+    );
 };
 
 export default PageHeading;
