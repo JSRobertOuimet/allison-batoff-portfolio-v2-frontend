@@ -1,4 +1,14 @@
-const TextArea = ({ label, id }: { label: string; id: string }) => {
+const TextArea = ({
+    label,
+    id,
+    error,
+    onChange,
+}: {
+    label: string;
+    id: string;
+    error?: string;
+    onChange?: () => void;
+}) => {
     return (
         <div className="mb-4">
             <label htmlFor={id} className="block mb-1 font-bold">
@@ -8,9 +18,12 @@ const TextArea = ({ label, id }: { label: string; id: string }) => {
                 id={id}
                 name={id}
                 rows={4}
-                className="w-full border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 user-invalid:border user-invalid:border-red-600"
-                required
+                className={`w-full border ${error ? "border-2 border-red-600" : "border-gray-300"} px-3 py-2 outline-none focus:border-gray-500`}
+                onChange={onChange}
             />
+            {error && (
+                <p className="mt-1 text-sm text-red-600">{error}</p>
+            )}
         </div>
     );
 };

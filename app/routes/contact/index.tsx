@@ -1,5 +1,5 @@
 import type { Route } from "../../+types/root";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useActionData, Form, useNavigation } from "react-router";
 import { Resend } from "resend";
 import { emailTemplate } from "~/utils/emailTemplate";
@@ -60,10 +60,60 @@ export default function ContactPage() {
     };
     const navigation = useNavigation().state;
     const formRef = useRef<HTMLFormElement>(null);
+    const [clientErrors, setClientErrors] = useState<{
+        name?: string;
+        email?: string;
+        subject?: string;
+        message?: string;
+    }>({});
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        const formData = new FormData(e.currentTarget);
+        const name = formData.get("name") as string;
+        const email = formData.get("email") as string;
+        const subject = formData.get("subject") as string;
+        const message = formData.get("message") as string;
+
+        const errors: typeof clientErrors = {};
+
+        if (!name || name.trim() === "") {
+            errors.name = "Name is required.";
+        }
+
+        if (!email || email.trim() === "") {
+            errors.email = "Email address is required.";
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            errors.email = "Please enter a valid email address.";
+        }
+
+        if (!subject || subject.trim() === "") {
+            errors.subject = "Subject is required.";
+        }
+
+        if (!message || message.trim() === "") {
+            errors.message = "Message is required.";
+        }
+
+        if (Object.keys(errors).length > 0) {
+            e.preventDefault();
+            setClientErrors(errors);
+            return;
+        }
+
+        // Clear any previous client errors
+        setClientErrors({});
+    };
+
+    const clearFieldError = (field: keyof typeof clientErrors) => {
+        if (clientErrors[field]) {
+            setClientErrors(prev => ({ ...prev, [field]: undefined }));
+        }
+    };
 
     useEffect(() => {
         if (data?.success && formRef.current) {
             formRef.current.reset();
+            setClientErrors({});
         }
     }, [data?.success]);
 
@@ -112,22 +162,44 @@ export default function ContactPage() {
                             message="Message sent successfully!"
                         />
                     )}
+                    {data?.error && (
+                        <Alert type="error" message={data.error} />
+                    )}
                     <p className="text-sm mb-4">
                         All fields are required.
                     </p>
-                    <Form method="post" ref={formRef}>
-                        <Input type="text" label="Name" id="name" />
+                    <Form
+                        method="post"
+                        ref={formRef}
+                        onSubmit={handleSubmit}
+                        noValidate>
+                        <Input
+                            type="text"
+                            label="Name"
+                            id="name"
+                            error={clientErrors.name}
+                            onChange={() => clearFieldError("name")}
+                        />
                         <Input
                             type="email"
                             label="Email address"
                             id="email"
+                            error={clientErrors.email}
+                            onChange={() => clearFieldError("email")}
                         />
                         <Input
                             type="text"
                             label="Subject"
                             id="subject"
+                            error={clientErrors.subject}
+                            onChange={() => clearFieldError("subject")}
                         />
-                        <TextArea label="Message" id="message" />
+                        <TextArea
+                            label="Message"
+                            id="message"
+                            error={clientErrors.message}
+                            onChange={() => clearFieldError("message")}
+                        />
                         <SubmitButton
                             state={navigation}
                             label="Submit"
