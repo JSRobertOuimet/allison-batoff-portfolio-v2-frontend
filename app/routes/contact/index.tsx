@@ -20,11 +20,11 @@ export async function action({ request }: { request: Request }) {
         const email = formData.get("email") as string;
         const subject = formData.get("subject") as string;
         const message = formData.get("message") as string;
-        const resend = new Resend(process.env.RESEND_API_KEY);
+        const resend = new Resend(process.env.VITE_RESEND_API_KEY);
 
         await resend.emails.send({
-            from: `${process.env.EMAIL_FROM}`,
-            to: `${process.env.EMAIL_TO}`,
+            from: `${process.env.VITE_EMAIL_FROM}`,
+            to: `${process.env.VITE_EMAIL_TO}`,
             replyTo: email,
             subject: subject,
             html: emailTemplate({ name, email, message }),
