@@ -1,6 +1,13 @@
 import type { ActionFunctionArgs } from "react-router";
-import { redirect, useActionData, Form, Link } from "react-router";
+import {
+    redirect,
+    useActionData,
+    useNavigation,
+    Form,
+    Link,
+} from "react-router";
 import { useState } from "react";
+import SubmitButton from "~/components/SubmitButton";
 
 export async function action({ request }: ActionFunctionArgs) {
     const formData = await request.formData();
@@ -45,6 +52,7 @@ export async function action({ request }: ActionFunctionArgs) {
 
 export default function Login() {
     const actionData = useActionData() as { error?: string };
+    const navigation = useNavigation().state;
     const [clientError, setClientError] = useState<string>("");
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -89,7 +97,6 @@ export default function Login() {
                     type="password"
                     id="password"
                     className={`w-full border ${clientError || actionData?.error ? "border-2 border-red-600" : "border-gray-300"} px-3 py-2 outline-none focus:border-gray-500`}
-                    onChange={() => setClientError("")}
                 />
                 {(clientError || actionData?.error) && (
                     <p className="mt-1 text-sm text-red-600">
@@ -99,9 +106,11 @@ export default function Login() {
                 )}
             </div>
 
-            <button className="mt-4 bg-gray-950 hover:bg-gray-800 text-white font-bold py-2 px-4 cursor-pointer w-full">
-                Submit
-            </button>
+            <SubmitButton
+                state={navigation}
+                label="Submit"
+                block="true"
+            />
         </Form>
     );
 }

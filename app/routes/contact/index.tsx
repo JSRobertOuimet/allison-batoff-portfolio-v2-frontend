@@ -203,6 +203,7 @@ export default function ContactPage() {
                         <SubmitButton
                             state={navigation}
                             label="Submit"
+                            block="false"
                         />
                     </Form>
                 </div>
