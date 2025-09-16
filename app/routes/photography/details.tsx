@@ -19,11 +19,11 @@ export async function loader({ request, params }: Route.LoaderArgs) {
     const { slug } = params as { slug: string };
 
     const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/destinations?sort=title&populate=*`
+        `${import.meta.env.VITE_API_URL}/destinations?sort=location&populate=*`
     );
     const json: StrapiResponse<StrapiDestination> = await res.json();
     const destinations = json.data.map(destination => ({
-        title: destination.title,
+        location: destination.location,
         description: destination.description,
         slug: destination.slug,
         thumbnail: {
@@ -65,7 +65,7 @@ const PhotographyDetailsPage = ({
         loaderData;
     return (
         <>
-            <PageHeading heading={destination.title} />
+            <PageHeading heading={destination.location} />
             <div className="grid lg:grid-cols-12 gap-8">
                 <p className="lg:col-span-4">{destination.description}</p>
                 <div className="lg:col-span-8">

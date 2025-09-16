@@ -17,11 +17,11 @@ export async function loader({
     request,
 }: Route.LoaderArgs): Promise<{ destinations: DestinationMeta[] }> {
     const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/destinations?sort=title&populate=*`
+        `${import.meta.env.VITE_API_URL}/destinations?sort=location&populate=*`
     );
     const json: StrapiResponse<StrapiDestination> = await res.json();
     const destinations = json.data.map(destination => ({
-        title: destination.title,
+        location: destination.location,
         slug: destination.slug,
         thumbnail: {
             imageUrl: destination.thumbnail.formats.large.url,

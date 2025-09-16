@@ -17,7 +17,9 @@ const Pagination = ({
                 className="w-1/2 p-4 border-r border-r-gray-200 hover:bg-gray-100">
                 <div className="flex flex-col">
                     <div className="text-sm">Previous</div>
-                    <div className="text-2xl">{previousItem.title}</div>
+                    <div className="text-2xl">
+                        {previousItem.location || previousItem.title}
+                    </div>
                 </div>
             </Link>
             <Link
@@ -27,7 +29,7 @@ const Pagination = ({
                 <div className="flex flex-col">
                     <div className="text-sm text-right">Next</div>
                     <div className="text-2xl text-right text-balance">
-                        {nextItem.title}
+                        {nextItem.location || nextItem.title}
                     </div>
                 </div>
             </Link>
