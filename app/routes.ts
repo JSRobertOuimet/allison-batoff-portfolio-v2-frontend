@@ -7,8 +7,7 @@ import {
 
 export default [
     layout("routes/layouts/main.tsx", [
-        index("routes/home/index.tsx"),
-        route("photography", "routes/photography/index.tsx"),
+        index("routes/photography/index.tsx"),
         route("photography/:slug", "routes/photography/details.tsx"),
         route("design", "routes/design/index.tsx"),
         route("design/:slug", "routes/design/details.tsx"),
