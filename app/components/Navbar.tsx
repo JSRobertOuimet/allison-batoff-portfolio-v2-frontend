@@ -27,7 +27,7 @@ const Navbar = () => {
                                     : baseClassName
                             }
                             to="/">
-                            Photography
+                            Home
                         </NavLink>
                     </li>
                     <li className="flex justify-center mr-6">
@@ -39,6 +39,17 @@ const Navbar = () => {
                             }
                             to="/design">
                             Design
+                        </NavLink>
+                    </li>
+                    <li className="flex justify-center mr-6">
+                        <NavLink
+                            className={({ isActive }) =>
+                                isActive
+                                    ? activeClassName
+                                    : baseClassName
+                            }
+                            to="/photography">
+                            Photography
                         </NavLink>
                     </li>
                     <li className="flex justify-center">
