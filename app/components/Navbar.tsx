@@ -79,7 +79,7 @@ const Navbar = () => {
                                 }
                                 to="/"
                                 onClick={() => setMenuOpen(false)}>
-                                Home
+                                Photography
                             </NavLink>
                         </li>
                         <li className="py-4">
@@ -92,18 +92,6 @@ const Navbar = () => {
                                 to="/design"
                                 onClick={() => setMenuOpen(false)}>
                                 Design
-                            </NavLink>
-                        </li>
-                        <li className="py-4">
-                            <NavLink
-                                className={({ isActive }) =>
-                                    isActive
-                                        ? activeClassName
-                                        : baseClassName
-                                }
-                                to="/photography"
-                                onClick={() => setMenuOpen(false)}>
-                                Photography
                             </NavLink>
                         </li>
                         <li className="py-4">
