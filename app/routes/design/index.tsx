@@ -55,10 +55,10 @@ export default function DesignPage({ loaderData }: DesignPageProps) {
         <>
             <PageHeading heading="Design" />
 
-            <div className="grid grid-cols gap-8">
-                {caseStudies.map(caseStudy => (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {caseStudies.map((caseStudy, i) => (
                     <CaseStudyTile
-                        key={caseStudy.slug}
+                        key={i}
                         caseStudy={caseStudy}
                     />
                 ))}
