@@ -47,7 +47,7 @@ export async function action({ request }: ActionFunctionArgs) {
         return redirect(redirectTo);
     }
 
-    return { error: "The password is invalid." };
+    return { error: "Password is invalid." };
 }
 
 export default function Login() {
@@ -61,7 +61,7 @@ export default function Login() {
 
         if (!password || password.trim() === "") {
             e.preventDefault();
-            setClientError("The password is required.");
+            setClientError("Password is required.");
             return;
         }
 
@@ -71,7 +71,7 @@ export default function Login() {
     return (
         <Form
             method="post"
-            className="p-8 border border-gray-200 max-w-sm mx-auto"
+            className="p-8 border border-gray-300 max-w-sm mx-auto"
             onSubmit={handleSubmit}
             noValidate>
             <h1 className="sr-only">Login</h1>
