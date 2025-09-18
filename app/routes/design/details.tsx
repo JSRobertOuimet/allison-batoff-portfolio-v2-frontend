@@ -65,16 +65,19 @@ const DesignDetailsPage = ({
 
     return (
         <>
-            <div className="mx-auto prose prose-h2:font-normal prose-h2:mt-0 prose-h2:mb-4 prose-h3:font-normal prose-h3:mt-0 prose-blockquote:text-2xl prose-blockquote:font-normal prose-img:border prose-img:border-gray-200">
-                <PageHeading heading={caseStudy.title} alignment="centered" />
+            <div className="mx-auto prose prose-h2:font-normal prose-h2:mt-0 prose-h2:mb-4 prose-h3:font-normal prose-h3:mt-0 prose-blockquote:text-2xl prose-blockquote:font-normal prose-img:border prose-img:border-gray-300">
+                <PageHeading
+                    heading={caseStudy.title}
+                    alignment="centered"
+                />
                 <ul className="pl-0">
-                    <li className="flex mt-0 mb-0 pl-0 py-4 list-none border-b-1 border-gray-200">
+                    <li className="flex mt-0 mb-0 pl-0 py-4 list-none border-b-1 border-gray-300">
                         <div className="w-1/3 font-bold">Year</div>
                         <div className="w-full pl-4">
                             {caseStudy.year}
                         </div>
                     </li>
-                    <li className="flex mt-0 mb-0 pl-0 py-4 list-none border-b-1 border-gray-200">
+                    <li className="flex mt-0 mb-0 pl-0 py-4 list-none border-b-1 border-gray-300">
                         <div className="w-1/3 font-bold">Duration</div>
                         <div className="w-full pl-4">
                             {caseStudy.duration}
