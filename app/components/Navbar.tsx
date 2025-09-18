@@ -4,13 +4,13 @@ import { NavLink } from "react-router";
 
 const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
-    const baseClassName = "text-gray-500 hover:text-gray-900";
-    const activeClassName = "text-gray-900";
+    const baseClassName = "text-gray-500 hover:text-gray-900 outline-offset-8";
+    const activeClassName = "text-gray-900 outline-offset-8";
 
     return (
-        <nav className="mb-12 border-b-1 border-gray-200">
+        <nav className="mb-12 border-b-1 border-gray-300">
             <div className="container mx-auto p-4 flex justify-between items-center">
-                <NavLink to="/">
+                <NavLink to="/" className="outline-offset-8">
                     <div className="text-2xl font-light text-gray-900">
                         Allison Batoff
                     </div>

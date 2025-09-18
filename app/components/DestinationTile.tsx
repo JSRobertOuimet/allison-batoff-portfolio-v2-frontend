@@ -9,7 +9,7 @@ const DestinationTile = ({
     return (
         <Link
             to={`/photography/${destination.slug}`}
-            className="relative aspect-square overflow-hidden">
+            className="relative aspect-square overflow-hidden outline-offset-8">
             <h2 className="absolute left-6 bottom-5 text-2xl text-white z-10">
                 {destination.location}
             </h2>

@@ -20,7 +20,7 @@ const Input = ({
                 type={type}
                 id={id}
                 name={id}
-                className={`w-full border ${error ? "border-2 border-red-600" : "border-gray-300"} px-3 py-2 outline-none focus:border-gray-500`}
+                className={`w-full border ${error ? "border-2 border-red-600" : "border-gray-300"} px-3 py-2`}
                 onChange={onChange}
             />
             {error && (

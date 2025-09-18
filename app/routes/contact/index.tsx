@@ -138,7 +138,7 @@ export default function ContactPage() {
                         <a
                             href="https://www.linkedin.com/in/allisonbatoff/"
                             target="_blank"
-                            className="font-medium underline">
+                            className="font-medium underline outline-offset-2">
                             LinkedIn
                         </a>
                         , or using the contact form, and I will happily
@@ -149,7 +149,7 @@ export default function ContactPage() {
                         <a
                             href="https://x.com/AllisonBatoff"
                             target="_blank"
-                            className="font-medium underline">
+                            className="font-medium underline outline-offset-2">
                             Twitter
                         </a>{" "}
                         where I share what I learn and what inspires me.
