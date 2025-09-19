@@ -7,12 +7,10 @@ import type {
 import PageHeading from "~/components/PageHeading";
 import Pagination from "~/components/Pagination";
 
-type PhotographyDetailsPageProps = {
-    loaderData: {
-        destination: Destination;
-        previousDestination: Destination;
-        nextDestination: Destination;
-    };
+type LoaderData = {
+    destination: Destination;
+    previousDestination: Destination;
+    nextDestination: Destination;
 };
 
 export async function loader({ request, params }: Route.LoaderArgs) {
@@ -48,9 +46,9 @@ export async function loader({ request, params }: Route.LoaderArgs) {
     return { destination, previousDestination, nextDestination };
 }
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ data }: { data: LoaderData }) {
     return [
-        { title: "Photography | Allison Batoff" },
+        { title: `${data.destination.location} | Allison Batoff` },
         {
             name: "description",
             content: "Portfolio of UX designer Allison Batoff.",
@@ -60,14 +58,18 @@ export function meta({}: Route.MetaArgs) {
 
 const PhotographyDetailsPage = ({
     loaderData,
-}: PhotographyDetailsPageProps) => {
+}: {
+    loaderData: LoaderData;
+}) => {
     const { destination, previousDestination, nextDestination } =
         loaderData;
     return (
         <>
             <PageHeading heading={destination.location} />
             <div className="grid lg:grid-cols-12 gap-8">
-                <p className="lg:col-span-4">{destination.description}</p>
+                <p className="lg:col-span-4">
+                    {destination.description}
+                </p>
                 <div className="lg:col-span-8">
                     {destination.photos.map(photo => (
                         <img

@@ -1,3 +1,4 @@
+import type { Route } from "./+types";
 import type { ActionFunctionArgs } from "react-router";
 import {
     redirect,
@@ -48,6 +49,16 @@ export async function action({ request }: ActionFunctionArgs) {
     }
 
     return { error: "Password is invalid." };
+}
+
+export function meta({}: Route.MetaArgs) {
+    return [
+        { title: "Login | Allison Batoff" },
+        {
+            name: "description",
+            content: "Portfolio of UX designer Allison Batoff.",
+        },
+    ];
 }
 
 export default function Login() {

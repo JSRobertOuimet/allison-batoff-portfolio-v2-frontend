@@ -10,12 +10,10 @@ import rehypeRaw from "rehype-raw";
 import Pagination from "~/components/Pagination";
 import { requireAuth } from "~/utils/auth.server";
 
-type CaseStudyDetailsPageProps = {
-    loaderData: {
-        caseStudy: CaseStudy;
-        previousCaseStudy: CaseStudy;
-        nextCaseStudy: CaseStudy;
-    };
+type LoaderData = {
+    caseStudy: CaseStudy;
+    previousCaseStudy: CaseStudy;
+    nextCaseStudy: CaseStudy;
 };
 
 export async function loader({ request, params }: Route.LoaderArgs) {
@@ -48,9 +46,9 @@ export async function loader({ request, params }: Route.LoaderArgs) {
     return { caseStudy, previousCaseStudy, nextCaseStudy };
 }
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ data }: { data: LoaderData }) {
     return [
-        { title: "Design | Allison Batoff" },
+        { title: `${data.caseStudy.title} | Allison Batoff` },
         {
             name: "description",
             content: "Portfolio of UX designer Allison Batoff.",
@@ -60,7 +58,9 @@ export function meta({}: Route.MetaArgs) {
 
 const DesignDetailsPage = ({
     loaderData,
-}: CaseStudyDetailsPageProps) => {
+}: {
+    loaderData: LoaderData;
+}) => {
     const { caseStudy, previousCaseStudy, nextCaseStudy } = loaderData;
 
     return (
