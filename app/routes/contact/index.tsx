@@ -61,6 +61,7 @@ export default function ContactPage() {
     const navigation = useNavigation().state;
     const formRef = useRef<HTMLFormElement>(null);
     const [clientErrors, setClientErrors] = useState<{
+        fullname?: string;
         name?: string;
         email?: string;
         subject?: string;
@@ -69,12 +70,15 @@ export default function ContactPage() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         const formData = new FormData(e.currentTarget);
+        const fullname = formData.get("fullname") as string;
         const name = formData.get("name") as string;
         const email = formData.get("email") as string;
         const subject = formData.get("subject") as string;
         const message = formData.get("message") as string;
 
         const errors: typeof clientErrors = {};
+
+        if (fullname) return;
 
         if (!name || name.trim() === "") {
             errors.name = "Name is required.";
@@ -100,7 +104,6 @@ export default function ContactPage() {
             return;
         }
 
-        // Clear any previous client errors
         setClientErrors({});
     };
 
@@ -173,6 +176,16 @@ export default function ContactPage() {
                         ref={formRef}
                         onSubmit={handleSubmit}
                         noValidate>
+                        <input
+                            type="text"
+                            name="fullname"
+                            autoComplete="off"
+                            tabIndex={-1}
+                            style={{
+                                position: "absolute",
+                                left: "-9999px",
+                            }}
+                        />
                         <Input
                             type="text"
                             label="Name"
