@@ -16,11 +16,17 @@ export async function action({ request }: { request: Request }) {
 
     try {
         const formData = await request.formData();
+        const fullname = formData.get("fullname") as string;
         const name = formData.get("name") as string;
         const email = formData.get("email") as string;
         const subject = formData.get("subject") as string;
         const message = formData.get("message") as string;
         const resend = new Resend(process.env.VITE_RESEND_API_KEY);
+
+        // To prevent bots from sending emails
+        if (fullname) {
+            return;
+        }
 
         await resend.emails.send({
             from: `${process.env.VITE_EMAIL_FROM}`,
@@ -61,7 +67,6 @@ export default function ContactPage() {
     const navigation = useNavigation().state;
     const formRef = useRef<HTMLFormElement>(null);
     const [clientErrors, setClientErrors] = useState<{
-        fullname?: string;
         name?: string;
         email?: string;
         subject?: string;
@@ -70,15 +75,12 @@ export default function ContactPage() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         const formData = new FormData(e.currentTarget);
-        const fullname = formData.get("fullname") as string;
         const name = formData.get("name") as string;
         const email = formData.get("email") as string;
         const subject = formData.get("subject") as string;
         const message = formData.get("message") as string;
 
         const errors: typeof clientErrors = {};
-
-        if (fullname) return;
 
         if (!name || name.trim() === "") {
             errors.name = "Name is required.";
