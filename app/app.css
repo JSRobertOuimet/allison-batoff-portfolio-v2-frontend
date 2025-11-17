@@ -9,29 +9,20 @@
         "Noto Color Emoji";
 }
 
-@media (width < 80rem) {
-    .prose figure {
-        width: 100%;
-    }
-}
-
 @media (width >= 80rem) {
-    .prose figure {
-        display: flex;
-        flex-direction: column;
-        margin-left: calc(-50vw + 50%);
-        margin-right: calc(-50vw + 50%);
-        padding-left: 16rem;
-        padding-right: 16rem;
-        width: 100vw;
+    .content > :not(figure) {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 700px;
     }
 
-    .prose figure.portrait {
-        display: block;
-        margin-left: 0;
-        margin-right: 0;
-        padding-left: 0;
-        padding-right: 0;
+    .content img {
         width: 100%;
+    }
+
+    figure.portrait {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 700px;
     }
 }

@@ -65,12 +65,12 @@ const DesignDetailsPage = ({
 
     return (
         <>
-            <div className="mx-auto prose prose-h2:font-normal prose-h2:mt-0 prose-h2:mb-4 prose-h3:font-normal prose-h3:mt-0 prose-blockquote:text-2xl prose-blockquote:font-normal prose-img:border prose-img:border-gray-300">
+            <div className="mx-auto max-w-none prose prose-h2:font-normal prose-h2:mt-0 prose-h2:mb-4 prose-h3:font-normal prose-h3:mt-0 prose-blockquote:text-2xl prose-blockquote:font-normal prose-img:border prose-img:border-gray-300">
                 <PageHeading
                     heading={caseStudy.title}
                     alignment="centered"
                 />
-                <ul className="pl-0">
+                <ul className="pl-0 content">
                     <li className="flex mt-0 mb-0 pl-0 py-4 list-none border-b-1 border-gray-300">
                         <div className="w-1/3 font-bold">Year(s)</div>
                         <div className="w-full pl-4">
@@ -90,16 +90,18 @@ const DesignDetailsPage = ({
                         </div>
                     </li>
                 </ul>
-                <div className="mb-12">
+                <div className="content mb-12">
                     <Markdown rehypePlugins={[rehypeRaw]}>
                         {caseStudy.body}
                     </Markdown>
                 </div>
-                <Pagination
-                    subdirectory="design"
-                    previousItem={previousCaseStudy}
-                    nextItem={nextCaseStudy}
-                />
+                <div className="content">
+                    <Pagination
+                        subdirectory="design"
+                        previousItem={previousCaseStudy}
+                        nextItem={nextCaseStudy}
+                    />
+                </div>
             </div>
         </>
     );
