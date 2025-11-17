@@ -72,7 +72,7 @@ const DesignDetailsPage = ({
                 />
                 <ul className="pl-0">
                     <li className="flex mt-0 mb-0 pl-0 py-4 list-none border-b-1 border-gray-300">
-                        <div className="w-1/3 font-bold">Year</div>
+                        <div className="w-1/3 font-bold">Year(s)</div>
                         <div className="w-full pl-4">
                             {caseStudy.year}
                         </div>
