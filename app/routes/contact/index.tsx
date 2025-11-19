@@ -40,10 +40,7 @@ export async function action({ request }: { request: Request }) {
     } catch (error) {
         return {
             error: "Failed to send email.",
-            details:
-                error instanceof Error
-                    ? error.message
-                    : "Unknown error",
+            details: error instanceof Error ? error.message : "Unknown error",
         };
     }
 }
@@ -111,7 +108,7 @@ export default function ContactPage() {
 
     const clearFieldError = (field: keyof typeof clientErrors) => {
         if (clientErrors[field]) {
-            setClientErrors(prev => ({ ...prev, [field]: undefined }));
+            setClientErrors((prev) => ({ ...prev, [field]: undefined }));
         }
     };
 
@@ -125,59 +122,56 @@ export default function ContactPage() {
     return (
         <>
             <PageHeading heading="Contact" />
-            <div className="grid md:grid-cols-12 gap-8">
+            <div className="grid gap-8 md:grid-cols-12">
                 <div className="md:col-span-6">
                     <p className="mb-4">
-                        My name is Allison Batoff and I am a user
-                        experience designer based out of Ottawa,
-                        Ontario.
+                        My name is Allison Batoff and I am a user experience
+                        designer based out of Ottawa, Ontario.
                     </p>
                     <p className="mb-4">
-                        When I'm away from my desk I love to travel and
-                        to capture the places I visit through
-                        photography.
+                        When I'm away from my desk I love to travel and to
+                        capture the places I visit through photography.
                     </p>
                     <p className="mb-4">
-                        Interested in working together or just curious
-                        to learn more? Reach out to me on{" "}
+                        Interested in working together or just curious to learn
+                        more? Reach out to me on{" "}
                         <a
                             href="https://www.linkedin.com/in/allisonbatoff/"
                             target="_blank"
-                            className="font-medium underline outline-offset-2">
+                            className="font-medium underline outline-offset-2"
+                        >
                             LinkedIn
                         </a>
-                        , or using the contact form, and I will happily
-                        answer your questions.
+                        , or using the contact form, and I will happily answer
+                        your questions.
                     </p>
                     <p className="mb-4">
                         I can also be found on{" "}
                         <a
                             href="https://x.com/AllisonBatoff"
                             target="_blank"
-                            className="font-medium underline outline-offset-2">
+                            className="font-medium underline outline-offset-2"
+                        >
                             Twitter
                         </a>{" "}
                         where I share what I learn and what inspires me.
                     </p>
                 </div>
-                <div className="md:col-span-6 xl:col-span-4 xl:col-start-9 p-8 shadow-2xl">
+                <div className="p-8 shadow-2xl md:col-span-6 xl:col-span-4 xl:col-start-9">
                     {data?.success && (
                         <Alert
                             type="success"
                             message="Message sent successfully!"
                         />
                     )}
-                    {data?.error && (
-                        <Alert type="error" message={data.error} />
-                    )}
-                    <p className="text-sm mb-4">
-                        All fields are required.
-                    </p>
+                    {data?.error && <Alert type="error" message={data.error} />}
+                    <p className="mb-4 text-sm">All fields are required.</p>
                     <Form
                         method="post"
                         ref={formRef}
                         onSubmit={handleSubmit}
-                        noValidate>
+                        noValidate
+                    >
                         <input
                             type="text"
                             name="fullname"

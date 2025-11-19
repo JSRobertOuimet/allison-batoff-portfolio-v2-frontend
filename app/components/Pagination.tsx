@@ -10,11 +10,12 @@ const Pagination = ({
     nextItem: any;
 }) => {
     return (
-        <nav className="flex justify-between not-prose">
+        <nav className="not-prose flex justify-between">
             <Link
                 key={previousItem.slug}
                 to={`/${subdirectory}/${previousItem.slug}`}
-                className="w-1/2 p-4 border-r border-r-gray-200 hover:bg-gray-100 outline-offset-8">
+                className="w-1/2 border-r border-r-gray-200 p-4 outline-offset-8 hover:bg-gray-100"
+            >
                 <div className="flex flex-col">
                     <div className="text-sm">Previous</div>
                     <div className="text-2xl">
@@ -25,10 +26,11 @@ const Pagination = ({
             <Link
                 key={nextItem.slug}
                 to={`/${subdirectory}/${nextItem.slug}`}
-                className="w-1/2 p-4 flex justify-end hover:bg-gray-100 outline-offset-8">
+                className="flex w-1/2 justify-end p-4 outline-offset-8 hover:bg-gray-100"
+            >
                 <div className="flex flex-col">
-                    <div className="text-sm text-right">Next</div>
-                    <div className="text-2xl text-right text-balance">
+                    <div className="text-right text-sm">Next</div>
+                    <div className="text-right text-2xl text-balance">
                         {nextItem.location || nextItem.title}
                     </div>
                 </div>

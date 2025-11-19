@@ -9,8 +9,9 @@ const Button = ({
 }) => {
     return (
         <button
-            className={`${block === "true" ? "w-full" : ""} bg-gray-950 hover:bg-gray-800 text-white font-bold py-2 px-4 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed outline-offset-4`}
-            disabled={state === "submitting"}>
+            className={`${block === "true" ? "w-full" : ""} cursor-pointer bg-gray-950 px-4 py-2 font-bold text-white outline-offset-4 hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50`}
+            disabled={state === "submitting"}
+        >
             {state === "submitting" ? "Sending..." : label}
         </button>
     );

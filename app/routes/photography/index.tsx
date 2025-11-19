@@ -17,10 +17,10 @@ export async function loader({
     request,
 }: Route.LoaderArgs): Promise<{ destinations: DestinationMeta[] }> {
     const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/destinations?sort=location&populate=*`
+        `${import.meta.env.VITE_API_URL}/destinations?sort=location&populate=*`,
     );
     const json: StrapiResponse<StrapiDestination> = await res.json();
-    const destinations = json.data.map(destination => ({
+    const destinations = json.data.map((destination) => ({
         location: destination.location,
         slug: destination.slug,
         thumbnail: {
@@ -42,17 +42,15 @@ export function meta({}: Route.MetaArgs) {
     ];
 }
 
-export default function PhotographyPage({
-    loaderData,
-}: PhotographyPageProps) {
+export default function PhotographyPage({ loaderData }: PhotographyPageProps) {
     const { destinations } = loaderData;
 
     return (
         <>
             <PageHeading heading="Photography" />
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {destinations.map(destination => (
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {destinations.map((destination) => (
                     <DestinationTile
                         key={destination.slug}
                         destination={destination}

@@ -9,35 +9,31 @@ const Navbar = () => {
 
     return (
         <nav className="mb-12 border-b-1 border-gray-300">
-            <div className="container mx-auto p-4 flex justify-between items-center">
+            <div className="container mx-auto flex items-center justify-between p-4">
                 <NavLink to="/" className="outline-offset-8">
                     <div className="text-2xl font-light text-gray-900">
                         Allison Batoff
                     </div>
-                    <div className="text-gray-900">
-                        Photography & Design
-                    </div>
+                    <div className="text-gray-900">Photography & Design</div>
                 </NavLink>
                 <ul className="hidden md:flex">
-                    <li className="flex justify-center mr-6">
+                    <li className="mr-6 flex justify-center">
                         <NavLink
                             className={({ isActive }) =>
-                                isActive
-                                    ? activeClassName
-                                    : baseClassName
+                                isActive ? activeClassName : baseClassName
                             }
-                            to="/">
+                            to="/"
+                        >
                             Photography
                         </NavLink>
                     </li>
-                    <li className="flex justify-center mr-6">
+                    <li className="mr-6 flex justify-center">
                         <NavLink
                             className={({ isActive }) =>
-                                isActive
-                                    ? activeClassName
-                                    : baseClassName
+                                isActive ? activeClassName : baseClassName
                             }
-                            to="/design">
+                            to="/design"
+                        >
                             Design
                         </NavLink>
                     </li>
@@ -45,64 +41,57 @@ const Navbar = () => {
                     <li className="flex justify-center">
                         <NavLink
                             className={({ isActive }) =>
-                                isActive
-                                    ? activeClassName
-                                    : baseClassName
+                                isActive ? activeClassName : baseClassName
                             }
-                            to="/contact">
+                            to="/contact"
+                        >
                             Contact
                         </NavLink>
                     </li>
                 </ul>
-                <div className="md:hidden flex items-center py-4 pl-4">
+                <div className="flex items-center py-4 pl-4 md:hidden">
                     <button
                         className="cursor-pointer text-2xl"
-                        onClick={() => setMenuOpen(!menuOpen)}>
-                        {menuOpen ? (
-                            <IoCloseOutline />
-                        ) : (
-                            <IoMenuOutline />
-                        )}
+                        onClick={() => setMenuOpen(!menuOpen)}
+                    >
+                        {menuOpen ? <IoCloseOutline /> : <IoMenuOutline />}
                     </button>
                 </div>
             </div>
 
             {menuOpen && (
                 <div className="container mx-auto">
-                    <ul className="md:hidden p-4">
+                    <ul className="p-4 md:hidden">
                         <li className="py-4">
                             <NavLink
                                 className={({ isActive }) =>
-                                    isActive
-                                        ? activeClassName
-                                        : baseClassName
+                                    isActive ? activeClassName : baseClassName
                                 }
                                 to="/"
-                                onClick={() => setMenuOpen(false)}>
+                                onClick={() => setMenuOpen(false)}
+                            >
                                 Photography
                             </NavLink>
                         </li>
                         <li className="py-4">
                             <NavLink
                                 className={({ isActive }) =>
-                                    isActive
-                                        ? activeClassName
-                                        : baseClassName
+                                    isActive ? activeClassName : baseClassName
                                 }
                                 to="/design"
-                                onClick={() => setMenuOpen(false)}>
+                                onClick={() => setMenuOpen(false)}
+                            >
                                 Design
                             </NavLink>
                         </li>
                         <li className="py-4">
                             <NavLink
                                 className={({ isActive }) =>
-                                    isActive
-                                        ? activeClassName
-                                        : baseClassName
+                                    isActive ? activeClassName : baseClassName
                                 }
                                 to="/contact"
-                                onClick={() => setMenuOpen(false)}>
+                                onClick={() => setMenuOpen(false)}
+                            >
                                 Contact
                             </NavLink>
                         </li>

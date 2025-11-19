@@ -23,8 +23,7 @@ export async function action({ request }: ActionFunctionArgs) {
 
     if (res.ok) {
         const url = new URL(request.url);
-        const redirectTo =
-            url.searchParams.get("redirectTo") || "/design";
+        const redirectTo = url.searchParams.get("redirectTo") || "/design";
 
         const setCookieHeader =
             (res.headers as any).getSetCookie?.() ||
@@ -32,8 +31,7 @@ export async function action({ request }: ActionFunctionArgs) {
 
         if (Array.isArray(setCookieHeader)) {
             const headers = new Headers();
-            for (const c of setCookieHeader)
-                headers.append("Set-Cookie", c);
+            for (const c of setCookieHeader) headers.append("Set-Cookie", c);
             return redirect(redirectTo, { headers });
         }
 
@@ -82,9 +80,10 @@ export default function Login() {
     return (
         <Form
             method="post"
-            className="p-8 border border-gray-300 max-w-sm mx-auto"
+            className="mx-auto max-w-sm border border-gray-300 p-8"
             onSubmit={handleSubmit}
-            noValidate>
+            noValidate
+        >
             <h1 className="sr-only">Login</h1>
 
             <p className="mb-8 text-center">
@@ -98,9 +97,7 @@ export default function Login() {
             </p>
 
             <div className="mb-4">
-                <label
-                    htmlFor="password"
-                    className="block mb-1 font-bold">
+                <label htmlFor="password" className="mb-1 block font-bold">
                     Password
                 </label>
                 <input
@@ -111,17 +108,12 @@ export default function Login() {
                 />
                 {(clientError || actionData?.error) && (
                     <p className="mt-1 text-sm text-red-600">
-                        {clientError ||
-                            "Invalid password, please try again."}
+                        {clientError || "Invalid password, please try again."}
                     </p>
                 )}
             </div>
 
-            <SubmitButton
-                state={navigation}
-                label="Submit"
-                block="true"
-            />
+            <SubmitButton state={navigation} label="Submit" block="true" />
         </Form>
     );
 }

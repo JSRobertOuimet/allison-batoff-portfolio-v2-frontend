@@ -5,13 +5,7 @@ const typeStyles: Record<string, string> = {
     info: "bg-blue-100 text-blue-900",
 };
 
-const Alert = ({
-    type,
-    message,
-}: {
-    type: string;
-    message: string;
-}) => {
+const Alert = ({ type, message }: { type: string; message: string }) => {
     const style = typeStyles[type];
     return <div className={`mb-4 p-4 ${style}`}>{message}</div>;
 };
