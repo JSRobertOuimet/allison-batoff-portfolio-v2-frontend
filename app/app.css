@@ -9,6 +9,17 @@
         "Noto Color Emoji";
 }
 
+@utility prose {
+    blockquote {
+        p {
+            &:first-of-type::before,
+            &:last-of-type::after {
+                content: none;
+            }
+        }
+    }
+}
+
 @media (width >= 64rem) {
     .content > :not(figure),
     figure.portrait {
