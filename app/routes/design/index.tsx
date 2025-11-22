@@ -1,11 +1,8 @@
 import type { Route } from "../../+types/root";
-import type {
-    CaseStudyMeta,
-    StrapiResponse,
-    StrapiCaseStudy,
-} from "~/types";
+import type { CaseStudyMeta, StrapiResponse, StrapiCaseStudy } from "~/types";
 import PageHeading from "~/components/PageHeading";
 import CaseStudyTile from "~/components/CaseStudyTile";
+import CaseStudyEntry from "~/components/CaseStudyEntry";
 import { requireAuth } from "~/utils/auth.server";
 
 type DesignPageProps = {
@@ -20,10 +17,10 @@ export async function loader({
     await requireAuth(request);
 
     const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/case-studies?sort=year:desc&populate=*`
+        `${import.meta.env.VITE_API_URL}/case-studies?sort=year:desc&populate=*`,
     );
     const json: StrapiResponse<StrapiCaseStudy> = await res.json();
-    const caseStudies = json.data.map(caseStudy => ({
+    const caseStudies = json.data.map((caseStudy) => ({
         title: caseStudy.title,
         slug: caseStudy.slug,
         description: caseStudy.description,
@@ -31,7 +28,8 @@ export async function loader({
             imageUrl: caseStudy.thumbnail.url,
             alternativeText: caseStudy.thumbnail.alternativeText,
         },
-        categories: caseStudy.categories.map(category => ({
+        isFeatured: caseStudy.isFeatured,
+        categories: caseStudy.categories.map((category) => ({
             category: category.category,
         })),
     }));
@@ -51,18 +49,41 @@ export function meta({}: Route.MetaArgs) {
 
 export default function DesignPage({ loaderData }: DesignPageProps) {
     const { caseStudies } = loaderData;
+    const featuredCaseStudies = caseStudies.filter(
+        (caseStudy) => caseStudy.isFeatured,
+    );
+    const pastCaseStudies = caseStudies.filter(
+        (caseStudy) => !caseStudy.isFeatured,
+    );
+
     return (
         <>
             <PageHeading heading="Design" />
-
-            <div className="grid gap-8">
-                {caseStudies.map((caseStudy, i) => (
-                    <CaseStudyTile
-                        key={i}
-                        caseStudy={caseStudy}
-                    />
-                ))}
-            </div>
+            {featuredCaseStudies.length < 3 ? (
+                <div className="lg:w-2/3 xl:w-1/2">
+                    <div className="divide-y divide-gray-300">
+                        {caseStudies.map((caseStudy, i) => (
+                            <CaseStudyEntry key={i} caseStudy={caseStudy} />
+                        ))}
+                    </div>
+                </div>
+            ) : (
+                <>
+                    <div className="mb-8 grid gap-4 md:grid-cols-2 md:grid-rows-2">
+                        {featuredCaseStudies.map((caseStudy, i) => (
+                            <CaseStudyTile key={i} caseStudy={caseStudy} />
+                        ))}
+                    </div>
+                    <div className="mx-auto md:w-3/4 lg:w-1/2">
+                        <h2 className="text-2xl">Past Work</h2>
+                        <div className="divide-y divide-gray-300">
+                            {pastCaseStudies.map((caseStudy, i) => (
+                                <CaseStudyEntry key={i} caseStudy={caseStudy} />
+                            ))}
+                        </div>
+                    </div>
+                </>
+            )}
         </>
     );
 }

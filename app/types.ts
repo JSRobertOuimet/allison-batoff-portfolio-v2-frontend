@@ -40,6 +40,7 @@ export type StrapiCaseStudy = {
     year: string;
     duration: string;
     audience: string;
+    isFeatured: boolean;
     body: string;
 };
 
@@ -74,6 +75,7 @@ export type CaseStudyMeta = {
     categories: {
         category: string;
     }[];
+    isFeatured: boolean;
 };
 
 export type CaseStudy = {

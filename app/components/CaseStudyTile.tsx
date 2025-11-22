@@ -5,29 +5,25 @@ const CaseStudyTile = ({ caseStudy }: { caseStudy: CaseStudyMeta }) => {
     return (
         <Link
             to={`/design/${caseStudy.slug}`}
-            className="flex flex-col md:flex-row gap-8 hover:outline-gray-300 transition duration-500 outline-offset-8 group">
+            className="relative aspect-3/2 overflow-clip text-white outline-offset-8 md:first:row-span-2 md:first:aspect-auto md:nth-2:row-span-1 md:nth-2:aspect-3/2 md:nth-3:row-span-1 md:nth-3:aspect-3/2"
+        >
+            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-linear-to-t from-black/90 to-black/10 p-8">
+                <h3 className="mb-2 text-center text-2xl text-balance text-shadow-lg lg:text-3xl">
+                    {caseStudy.title}
+                </h3>
+                <div className="flex flex-wrap justify-center text-center text-balance">
+                    <span className="text-sm">
+                        {caseStudy.categories
+                            .map((category) => category.category)
+                            .join(" • ")}
+                    </span>
+                </div>
+            </div>
             <img
                 src={caseStudy.thumbnail.imageUrl}
                 alt={caseStudy.thumbnail.alternativeText}
-                className="md:w-1/4 object-cover border border-gray-300"
+                className="absolute w-full"
             />
-            <div>
-                <h2 className="text-2xl mb-4">{caseStudy.title}</h2>
-                <p className="mb-6 text-gray-500">
-                    {caseStudy.description}
-                </p>
-                <div className="group"></div>
-                {caseStudy.categories.map((category, i) => (
-                    <div
-                        key={category.category}
-                        style={
-                            { ["--i" as any]: i } as React.CSSProperties
-                        }
-                        className="inline-block mr-2 mb-2 px-2 py-1 rounded-full border-1 border-gray-300 text-sm opacity-0 transition-all duration-300 delay-[calc(var(--i)*90ms)] group-hover:opacity-100 group-focus:opacity-100">
-                        {category.category}
-                    </div>
-                ))}
-            </div>
         </Link>
     );
 };

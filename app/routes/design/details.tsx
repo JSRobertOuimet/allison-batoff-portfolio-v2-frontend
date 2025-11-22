@@ -55,7 +55,7 @@ const DesignDetailsPage = ({ loaderData }: { loaderData: LoaderData }) => {
 
     return (
         <>
-            <div className="prose prose-h2:font-normal prose-h2:mt-0 prose-h2:mb-4 prose-h3:font-normal prose-h3:mt-0 prose-blockquote:text-2xl prose-blockquote:font-normal prose-img:border prose-img:border-gray-300 mx-auto max-w-none">
+            <div className="prose prose-quoteless prose-h2:font-normal prose-h2:mt-0 prose-h2:mb-4 prose-h3:font-normal prose-h3:mt-0 prose-blockquote:text-2xl prose-blockquote:font-normal prose-img:border prose-img:border-gray-300 mx-auto max-w-none">
                 <PageHeading heading={caseStudy.title} alignment="centered" />
                 <ul className="content pl-0">
                     <li className="mt-0 mb-0 flex list-none border-b-1 border-gray-300 py-4 pl-0">
