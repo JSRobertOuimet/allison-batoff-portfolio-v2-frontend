@@ -24,6 +24,17 @@ body {
     @apply text-neutral-700;
 }
 
+@utility prose {
+    blockquote {
+        p {
+            &:first-of-type::before,
+            &:last-of-type::after {
+                content: none;
+            }
+        }
+    }
+}
+
 @media (width >= 64rem) {
     .content > :not(figure),
     figure.fit {
