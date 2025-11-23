@@ -69,7 +69,7 @@ export default function DesignPage({ loaderData }: DesignPageProps) {
                 </div>
             ) : (
                 <>
-                    <div className="mb-8 grid gap-4 md:grid-cols-2 md:grid-rows-2">
+                    <div className="mb-16 grid gap-4">
                         {featuredCaseStudies.map((caseStudy, i) => (
                             <CaseStudyTile key={i} caseStudy={caseStudy} />
                         ))}
