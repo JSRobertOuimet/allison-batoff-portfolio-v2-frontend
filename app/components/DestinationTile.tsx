@@ -1,4 +1,4 @@
-import type { DestinationMeta } from "~/types";
+import type { DestinationMeta } from "~/types/types";
 import { Link } from "react-router";
 
 const DestinationTile = ({ destination }: { destination: DestinationMeta }) => {

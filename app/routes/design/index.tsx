@@ -1,5 +1,9 @@
 import type { Route } from "../../+types/root";
-import type { CaseStudyMeta, StrapiResponse, StrapiCaseStudy } from "~/types";
+import type {
+    CaseStudyMeta,
+    StrapiResponse,
+    StrapiCaseStudy,
+} from "~/types/types";
 import PageHeading from "~/components/PageHeading";
 import CaseStudyTile from "~/components/CaseStudyTile";
 import CaseStudyEntry from "~/components/CaseStudyEntry";

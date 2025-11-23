@@ -1,4 +1,4 @@
-import type { CaseStudyMeta } from "~/types";
+import type { CaseStudyMeta } from "~/types/types";
 import { Link } from "react-router";
 
 const CaseStudyTile = ({ caseStudy }: { caseStudy: CaseStudyMeta }) => {
