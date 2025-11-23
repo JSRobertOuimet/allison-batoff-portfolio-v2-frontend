@@ -1,8 +1,9 @@
 import type { Route } from "./+types";
-import type { StrapiResponse, StrapiCaseStudy, CaseStudy } from "~/types";
+import type { StrapiResponse, StrapiCaseStudy, CaseStudy } from "~/types/types";
 import PageHeading from "~/components/PageHeading";
 import Markdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
+import rehypeFigure from "rehype-figure";
 import Pagination from "~/components/Pagination";
 import { requireAuth } from "~/utils/auth.server";
 
@@ -72,7 +73,7 @@ const DesignDetailsPage = ({ loaderData }: { loaderData: LoaderData }) => {
                     </li>
                 </ul>
                 <div className="content mb-12">
-                    <Markdown rehypePlugins={[rehypeRaw]}>
+                    <Markdown rehypePlugins={[rehypeRaw, rehypeFigure]}>
                         {caseStudy.body}
                     </Markdown>
                 </div>

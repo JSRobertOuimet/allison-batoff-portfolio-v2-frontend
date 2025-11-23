@@ -1,4 +1,4 @@
-import type { CaseStudyMeta } from "~/types";
+import type { CaseStudyMeta } from "~/types/types";
 import { Link } from "react-router";
 
 const CaseStudyEntry = ({ caseStudy }: { caseStudy: CaseStudyMeta }) => {
@@ -15,7 +15,7 @@ const CaseStudyEntry = ({ caseStudy }: { caseStudy: CaseStudyMeta }) => {
                     <div
                         key={category.category}
                         style={{ ["--i" as any]: i } as React.CSSProperties}
-                        className="not-last:mr-2 mb-2 inline-block rounded-sm border-1 border-gray-400 px-1 py-0.5 text-sm"
+                        className="mb-2 inline-block rounded-sm border-1 border-gray-400 px-1 py-0.5 text-sm not-last:mr-2"
                     >
                         {category.category}
                     </div>

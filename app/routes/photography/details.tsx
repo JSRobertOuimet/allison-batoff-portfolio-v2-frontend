@@ -1,5 +1,9 @@
 import type { Route } from "./+types";
-import type { Destination, StrapiResponse, StrapiDestination } from "~/types";
+import type {
+    Destination,
+    StrapiResponse,
+    StrapiDestination,
+} from "~/types/types";
 import PageHeading from "~/components/PageHeading";
 import Pagination from "~/components/Pagination";
 

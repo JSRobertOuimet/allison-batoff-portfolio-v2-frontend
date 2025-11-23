@@ -3,7 +3,7 @@ import type {
     StrapiResponse,
     StrapiDestination,
     DestinationMeta,
-} from "~/types";
+} from "~/types/types";
 import PageHeading from "~/components/PageHeading";
 import DestinationTile from "~/components/DestinationTile";
 
