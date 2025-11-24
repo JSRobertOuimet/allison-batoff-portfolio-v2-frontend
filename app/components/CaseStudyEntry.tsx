@@ -9,7 +9,7 @@ const CaseStudyEntry = ({ caseStudy }: { caseStudy: CaseStudyMeta }) => {
         >
             <div>
                 <h3 className="mb-4 font-bold underline">{caseStudy.title}</h3>
-                <p className="mb-4 text-gray-600">{caseStudy.description}</p>
+                <p className="mb-4 text-gray-600 text-b">{caseStudy.description}</p>
                 <div className="text-sm">
                     <span>
                         {caseStudy.categories
