@@ -87,7 +87,7 @@ export default function Login() {
             <h1 className="sr-only">Login</h1>
 
             <p className="mb-8 text-center">
-                This section is password protected.
+                This is a password-protected section.
                 <br />
                 To get access, please{" "}
                 <Link to="/contact" className="font-medium underline">
