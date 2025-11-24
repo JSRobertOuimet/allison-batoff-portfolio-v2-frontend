@@ -25,7 +25,7 @@ const CaseStudyTile = ({ caseStudy }: { caseStudy: CaseStudyMeta }) => {
             <img
                 src={caseStudy.thumbnail.imageUrl}
                 alt={caseStudy.thumbnail.alternativeText}
-                className="absolute"
+                className="absolute w-full"
             />
         </Link>
     );
