@@ -7,7 +7,7 @@ const CaseStudyTile = ({ caseStudy }: { caseStudy: CaseStudyMeta }) => {
             to={`/design/${caseStudy.slug}`}
             className="relative aspect-square overflow-clip text-white outline-offset-8 md:aspect-2/1"
         >
-            <div className="absolute inset-0 z-10 flex flex-col justify-end bg-linear-to-tr from-black/90 to-black/10 p-4 md:p-8">
+            <div className="absolute inset-0 z-10 flex flex-col justify-end bg-linear-to-tr from-black/80 to-black/10 to-70% p-4 md:p-8">
                 <h3 className="mb-4 text-2xl text-balance text-shadow-lg lg:text-3xl">
                     {caseStudy.title}
                 </h3>
@@ -25,7 +25,7 @@ const CaseStudyTile = ({ caseStudy }: { caseStudy: CaseStudyMeta }) => {
             <img
                 src={caseStudy.thumbnail.imageUrl}
                 alt={caseStudy.thumbnail.alternativeText}
-                className="absolute w-full"
+                className="absolute inset-0 h-full w-full object-cover object-center"
             />
         </Link>
     );
