@@ -3,7 +3,7 @@ import { config } from "../config/environment";
 
 export async function requireAuth(request: Request): Promise<void> {
     try {
-        const res = await fetch(`${config.API_URL}/cookies`, {
+        const res = await fetch(`${config.API_URL}/verify`, {
             headers: {
                 Cookie: request.headers.get("cookie") ?? "",
                 "X-Requested-With": "XMLHttpRequest",
