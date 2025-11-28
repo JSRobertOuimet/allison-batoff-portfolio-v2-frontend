@@ -5,7 +5,7 @@ import Markdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import rehypeFigure from "rehype-figure";
 import Pagination from "~/components/Pagination";
-import { requireAuth } from "~/utils/auth.server";
+import { requireAuth } from "~/utils/requireAuth";
 
 type LoaderData = {
     caseStudy: CaseStudy;

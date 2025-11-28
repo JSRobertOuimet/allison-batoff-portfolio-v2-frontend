@@ -7,7 +7,7 @@ import type {
 import PageHeading from "~/components/PageHeading";
 import CaseStudyTile from "~/components/CaseStudyTile";
 import CaseStudyEntry from "~/components/CaseStudyEntry";
-import { requireAuth } from "~/utils/auth.server";
+import { requireAuth } from "~/utils/requireAuth";
 
 type DesignPageProps = {
     loaderData: {
