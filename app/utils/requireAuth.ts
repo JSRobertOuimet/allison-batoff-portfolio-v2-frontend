@@ -1,29 +1,24 @@
 import { redirect } from "react-router";
-import { config } from "../config/environment";
+import { fetchWithAuthJson } from "./api";
 
 export async function requireAuth(request: Request): Promise<void> {
     try {
-        const res = await fetch(`${config.API_URL}/verify`, {
-            headers: {
-                Cookie: request.headers.get("cookie") ?? "",
-                "X-Requested-With": "XMLHttpRequest",
-            },
-            credentials: "include",
-        });
-
-        if (!res.ok) {
-            const url = new URL(request.url);
-            throw redirect(`/login?redirectTo=${url.pathname}`);
-        }
-
-        const data = await res.json();
+        const data = await fetchWithAuthJson<{ authorized: boolean }>(
+            "/verify",
+            request,
+        );
 
         if (!data.authorized) {
             const url = new URL(request.url);
             throw redirect(`/login?redirectTo=${url.pathname}`);
         }
     } catch (error) {
+        if (error && typeof error === "object" && "status" in error) {
+            throw error;
+        }
+
         const url = new URL(request.url);
+
         throw redirect(`/login?redirectTo=${url.pathname}`);
     }
 }

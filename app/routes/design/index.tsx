@@ -8,6 +8,7 @@ import PageHeading from "~/components/PageHeading";
 import CaseStudyTile from "~/components/CaseStudyTile";
 import CaseStudyEntry from "~/components/CaseStudyEntry";
 import { requireAuth } from "~/utils/requireAuth";
+import { fetchWithAuthJson } from "~/utils/api";
 
 type DesignPageProps = {
     loaderData: {
@@ -20,10 +21,11 @@ export async function loader({
 }: Route.LoaderArgs): Promise<{ caseStudies: CaseStudyMeta[] }> {
     await requireAuth(request);
 
-    const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/case-studies?sort=year:desc&populate=*`,
+    const json = await fetchWithAuthJson<StrapiResponse<StrapiCaseStudy>>(
+        "/case-studies?sort=year:desc&populate=*",
+        request,
     );
-    const json: StrapiResponse<StrapiCaseStudy> = await res.json();
+
     const caseStudies = json.data.map((caseStudy) => ({
         title: caseStudy.title,
         slug: caseStudy.slug,

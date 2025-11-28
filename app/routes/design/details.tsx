@@ -6,6 +6,7 @@ import rehypeRaw from "rehype-raw";
 import rehypeFigure from "rehype-figure";
 import Pagination from "~/components/Pagination";
 import { requireAuth } from "~/utils/requireAuth";
+import { fetchWithAuthJson } from "~/utils/api";
 
 type LoaderData = {
     caseStudy: CaseStudy;
@@ -18,10 +19,11 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 
     await requireAuth(request);
 
-    const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/case-studies?sort=year:desc&populate=*`,
+    const json = await fetchWithAuthJson<StrapiResponse<StrapiCaseStudy>>(
+        "/case-studies?sort=year:desc&populate=*",
+        request,
     );
-    const json: StrapiResponse<StrapiCaseStudy> = await res.json();
+
     const caseStudies = json.data.map((caseStudy) => ({
         title: caseStudy.title,
         slug: caseStudy.slug,
