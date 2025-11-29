@@ -22,7 +22,7 @@ export async function loader({ request, params }: Route.LoaderArgs) {
         `${import.meta.env.VITE_API_URL}/case-studies?sort=year:desc&populate=*`,
         {
             headers: {
-                Authorization: `Bearer ${import.meta.env.VITE_API_TOKEN}`,
+                Authorization: import.meta.env.VITE_API_TOKEN,
             },
         },
     );
