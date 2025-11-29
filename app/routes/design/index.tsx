@@ -22,6 +22,11 @@ export async function loader({
 
     const res = await fetch(
         `${import.meta.env.VITE_API_URL}/case-studies?sort=year:desc&populate=*`,
+        {
+            headers: {
+                Authorization: `Bearer ${import.meta.env.VITE_API_TOKEN}`,
+            },
+        },
     );
     const json: StrapiResponse<StrapiCaseStudy> = await res.json();
     const caseStudies = json.data.map((caseStudy) => ({
