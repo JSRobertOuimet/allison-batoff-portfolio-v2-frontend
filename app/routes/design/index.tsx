@@ -22,21 +22,44 @@ export async function loader({
 
     const res = await fetch(
         `${import.meta.env.VITE_API_URL}/case-studies?sort=year:desc&populate=*`,
-    );
-    const json: StrapiResponse<StrapiCaseStudy> = await res.json();
-    const caseStudies = json.data.map((caseStudy) => ({
-        title: caseStudy.title,
-        slug: caseStudy.slug,
-        description: caseStudy.description,
-        thumbnail: {
-            imageUrl: caseStudy.thumbnail.url,
-            alternativeText: caseStudy.thumbnail.alternativeText,
+        {
+            headers: {
+                Authorization: import.meta.env.VITE_API_TOKEN,
+            },
         },
-        isFeatured: caseStudy.isFeatured,
-        categories: caseStudy.categories.map((category) => ({
-            category: category.category,
-        })),
-    }));
+    );
+
+    if (!res.ok) {
+        throw new Response("Failed to load case studies.", {
+            status: res.status,
+            statusText: res.statusText,
+        });
+    }
+
+    const json: StrapiResponse<StrapiCaseStudy> = await res.json();
+    const caseStudies = json.data.map((caseStudy) => {
+        const categories = Array.isArray(caseStudy.categories)
+            ? caseStudy.categories
+            : [];
+
+        const thumbnail = caseStudy.thumbnail
+            ? {
+                  imageUrl: caseStudy.thumbnail.url ?? "",
+                  alternativeText: caseStudy.thumbnail.alternativeText ?? "",
+              }
+            : null;
+
+        return {
+            title: caseStudy.title,
+            slug: caseStudy.slug,
+            description: caseStudy.description,
+            thumbnail,
+            isFeatured: caseStudy.isFeatured,
+            categories: categories.map((category) => ({
+                category: category.category,
+            })),
+        };
+    });
 
     return { caseStudies };
 }
@@ -63,7 +86,7 @@ export default function DesignPage({ loaderData }: DesignPageProps) {
     return (
         <>
             <PageHeading heading="Design" />
-            {featuredCaseStudies.length < 3 ? (
+            {!featuredCaseStudies.length ? (
                 <div className="-mt-6 lg:w-2/3 xl:w-1/2">
                     <div className="divide-y divide-gray-300">
                         {caseStudies.map((caseStudy, i) => (

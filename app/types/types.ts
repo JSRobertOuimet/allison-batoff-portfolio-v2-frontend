@@ -26,7 +26,7 @@ export type StrapiDestination = {
 };
 
 export type StrapiCaseStudy = {
-    thumbnail: {
+    thumbnail?: {
         url: any;
         imageUrl: string;
         alternativeText: string;
@@ -68,7 +68,7 @@ export type CaseStudyMeta = {
     thumbnail: {
         imageUrl: string;
         alternativeText: string;
-    };
+    } | null;
     title: string;
     slug: string;
     description: string;

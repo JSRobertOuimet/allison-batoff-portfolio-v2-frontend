@@ -22,11 +22,13 @@ const CaseStudyTile = ({ caseStudy }: { caseStudy: CaseStudyMeta }) => {
                     </span>
                 </div>
             </div>
-            <img
-                src={caseStudy.thumbnail.imageUrl}
-                alt={caseStudy.thumbnail.alternativeText}
-                className="absolute inset-0 h-full w-full object-cover object-center"
-            />
+            {caseStudy.thumbnail && (
+                <img
+                    src={caseStudy.thumbnail.imageUrl}
+                    alt={caseStudy.thumbnail.alternativeText}
+                    className="absolute"
+                />
+            )}
         </Link>
     );
 };

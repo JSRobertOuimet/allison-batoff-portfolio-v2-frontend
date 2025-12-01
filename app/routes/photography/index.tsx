@@ -18,6 +18,11 @@ export async function loader({
 }: Route.LoaderArgs): Promise<{ destinations: DestinationMeta[] }> {
     const res = await fetch(
         `${import.meta.env.VITE_API_URL}/destinations?sort=location&populate=*`,
+        {
+            headers: {
+                Authorization: import.meta.env.VITE_API_TOKEN,
+            },
+        },
     );
     const json: StrapiResponse<StrapiDestination> = await res.json();
     const destinations = json.data.map((destination) => ({
