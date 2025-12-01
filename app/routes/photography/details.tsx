@@ -20,7 +20,7 @@ export async function loader({ request, params }: Route.LoaderArgs) {
         `${import.meta.env.VITE_API_URL}/destinations?sort=location&populate=*`,
         {
             headers: {
-                Authorization: import.meta.env.VITE_API_TOKEN,
+                Authorization: `Bearer ${import.meta.env.VITE_API_TOKEN}`,
             },
         },
     );

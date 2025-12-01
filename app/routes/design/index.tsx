@@ -24,7 +24,7 @@ export async function loader({
         `${import.meta.env.VITE_API_URL}/case-studies?sort=year:desc&populate=*`,
         {
             headers: {
-                Authorization: import.meta.env.VITE_API_TOKEN,
+                Authorization: `Bearer ${import.meta.env.VITE_API_TOKEN}`,
             },
         },
     );
