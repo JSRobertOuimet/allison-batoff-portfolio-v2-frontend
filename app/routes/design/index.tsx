@@ -28,20 +28,38 @@ export async function loader({
             },
         },
     );
+
+    if (!res.ok) {
+        throw new Response("Failed to load case studies.", {
+            status: res.status,
+            statusText: res.statusText,
+        });
+    }
+
     const json: StrapiResponse<StrapiCaseStudy> = await res.json();
-    const caseStudies = json.data.map((caseStudy) => ({
-        title: caseStudy.title,
-        slug: caseStudy.slug,
-        description: caseStudy.description,
-        thumbnail: {
-            imageUrl: caseStudy.thumbnail.url,
-            alternativeText: caseStudy.thumbnail.alternativeText,
-        },
-        isFeatured: caseStudy.isFeatured,
-        categories: caseStudy.categories.map((category) => ({
-            category: category.category,
-        })),
-    }));
+    const caseStudies = json.data.map((caseStudy) => {
+        const categories = Array.isArray(caseStudy.categories)
+            ? caseStudy.categories
+            : [];
+
+        const thumbnail = caseStudy.thumbnail
+            ? {
+                  imageUrl: caseStudy.thumbnail.url ?? "",
+                  alternativeText: caseStudy.thumbnail.alternativeText ?? "",
+              }
+            : null;
+
+        return {
+            title: caseStudy.title,
+            slug: caseStudy.slug,
+            description: caseStudy.description,
+            thumbnail,
+            isFeatured: caseStudy.isFeatured,
+            categories: categories.map((category) => ({
+                category: category.category,
+            })),
+        };
+    });
 
     return { caseStudies };
 }
