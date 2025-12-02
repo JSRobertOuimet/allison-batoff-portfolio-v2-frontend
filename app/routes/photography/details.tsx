@@ -16,7 +16,7 @@ type LoaderData = {
 export async function loader({ request, params }: Route.LoaderArgs) {
     const { slug } = params as { slug: string };
 
-    const res = await fetch(
+    const response = await fetch(
         `${import.meta.env.VITE_API_URL}/destinations?sort=location&populate=*`,
         {
             headers: {
@@ -24,7 +24,7 @@ export async function loader({ request, params }: Route.LoaderArgs) {
             },
         },
     );
-    const json: StrapiResponse<StrapiDestination> = await res.json();
+    const json: StrapiResponse<StrapiDestination> = await response.json();
     const destinations = json.data.map((destination) => ({
         location: destination.location,
         description: destination.description,

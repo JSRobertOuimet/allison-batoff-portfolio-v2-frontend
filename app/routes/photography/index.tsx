@@ -16,7 +16,7 @@ type PhotographyPageProps = {
 export async function loader({
     request,
 }: Route.LoaderArgs): Promise<{ destinations: DestinationMeta[] }> {
-    const res = await fetch(
+    const response = await fetch(
         `${import.meta.env.VITE_API_URL}/destinations?sort=location&populate=*`,
         {
             headers: {
@@ -24,7 +24,7 @@ export async function loader({
             },
         },
     );
-    const json: StrapiResponse<StrapiDestination> = await res.json();
+    const json: StrapiResponse<StrapiDestination> = await response.json();
     const destinations = json.data.map((destination) => ({
         location: destination.location,
         slug: destination.slug,

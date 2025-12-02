@@ -14,20 +14,20 @@ export async function action({ request }: ActionFunctionArgs) {
     const formData = await request.formData();
     const password = formData.get("password");
 
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password }),
         credentials: "include",
     });
 
-    if (res.ok) {
+    if (response.ok) {
         const url = new URL(request.url);
         const redirectTo = url.searchParams.get("redirectTo") || "/design";
 
         const setCookieHeader =
-            (res.headers as any).getSetCookie?.() ||
-            res.headers.get("set-cookie");
+            (response.headers as any).getSetCookie?.() ||
+            response.headers.get("set-cookie");
 
         if (Array.isArray(setCookieHeader)) {
             const headers = new Headers();

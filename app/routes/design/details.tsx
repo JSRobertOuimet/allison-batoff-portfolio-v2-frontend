@@ -18,7 +18,7 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 
     await requireAuth(request);
 
-    const res = await fetch(
+    const response = await fetch(
         `${import.meta.env.VITE_API_URL}/case-studies?sort=year:desc&populate=*`,
         {
             headers: {
@@ -26,7 +26,7 @@ export async function loader({ request, params }: Route.LoaderArgs) {
             },
         },
     );
-    const json: StrapiResponse<StrapiCaseStudy> = await res.json();
+    const json: StrapiResponse<StrapiCaseStudy> = await response.json();
     const caseStudies = json.data.map((caseStudy) => ({
         title: caseStudy.title,
         slug: caseStudy.slug,

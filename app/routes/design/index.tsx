@@ -20,7 +20,7 @@ export async function loader({
 }: Route.LoaderArgs): Promise<{ caseStudies: CaseStudyMeta[] }> {
     await requireAuth(request);
 
-    const res = await fetch(
+    const response = await fetch(
         `${import.meta.env.VITE_API_URL}/case-studies?sort=year:desc&populate=*`,
         {
             headers: {
@@ -29,7 +29,7 @@ export async function loader({
         },
     );
 
-    const json: StrapiResponse<StrapiCaseStudy> = await res.json();
+    const json: StrapiResponse<StrapiCaseStudy> = await response.json();
     const caseStudies = json.data.map((caseStudy) => {
         const categories = Array.isArray(caseStudy.categories)
             ? caseStudy.categories
