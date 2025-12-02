@@ -2,48 +2,24 @@ import { redirect } from "react-router";
 import { config } from "../config/environment";
 
 export async function requireAuth(request: Request): Promise<void> {
+    const url = new URL(request.url);
+    const loginPath = `/login?redirectTo=${url.pathname}`;
+
     try {
-        const res = await fetch(`${config.API_URL}/verify`, {
+        const response = await fetch(`${config.API_URL}/verify`, {
             headers: {
                 Cookie: request.headers.get("cookie") ?? "",
-                "X-Requested-With": "XMLHttpRequest",
+                "X-Request-With": "XMLHttpRequest",
             },
             credentials: "include",
         });
 
-        if (!res.ok) {
-            const url = new URL(request.url);
-            throw redirect(`/login?redirectTo=${url.pathname}`);
-        }
+        if (!response.ok) throw new Error("Failed verification.");
 
-        const data = await res.json();
-        if (!data.authorized) {
-            const url = new URL(request.url);
-            throw redirect(`/login?redirectTo=${url.pathname}`);
-        }
+        const data = await response.json();
+
+        if (!data.authorized) throw new Error("Unauthorized.");
     } catch (error) {
-        const url = new URL(request.url);
-        throw redirect(`/login?redirectTo=${url.pathname}`);
-    }
-}
-
-export async function checkAuth(request: Request): Promise<boolean> {
-    try {
-        const res = await fetch(`${config.API_URL}/verify`, {
-            headers: {
-                Cookie: request.headers.get("cookie") ?? "",
-                "X-Requested-With": "XMLHttpRequest",
-            },
-            credentials: "include",
-        });
-
-        if (!res.ok) {
-            return false;
-        }
-
-        const data = await res.json();
-        return data.authorized === true;
-    } catch (error) {
-        return false;
+        throw redirect(loginPath);
     }
 }
