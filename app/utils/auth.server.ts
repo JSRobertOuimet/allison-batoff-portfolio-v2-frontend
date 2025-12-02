@@ -3,7 +3,7 @@ import { config } from "../config/environment";
 
 export async function requireAuth(request: Request): Promise<void> {
     try {
-        const authRes = await fetch(`${config.API_URL}/cookies`, {
+        const res = await fetch(`${config.API_URL}/verify`, {
             headers: {
                 Cookie: request.headers.get("cookie") ?? "",
                 "X-Requested-With": "XMLHttpRequest",
@@ -11,12 +11,12 @@ export async function requireAuth(request: Request): Promise<void> {
             credentials: "include",
         });
 
-        if (!authRes.ok) {
+        if (!res.ok) {
             const url = new URL(request.url);
             throw redirect(`/login?redirectTo=${url.pathname}`);
         }
 
-        const data = await authRes.json();
+        const data = await res.json();
         if (!data.authorized) {
             const url = new URL(request.url);
             throw redirect(`/login?redirectTo=${url.pathname}`);
@@ -29,7 +29,7 @@ export async function requireAuth(request: Request): Promise<void> {
 
 export async function checkAuth(request: Request): Promise<boolean> {
     try {
-        const authRes = await fetch(`${config.API_URL}/cookies`, {
+        const res = await fetch(`${config.API_URL}/verify`, {
             headers: {
                 Cookie: request.headers.get("cookie") ?? "",
                 "X-Requested-With": "XMLHttpRequest",
@@ -37,11 +37,11 @@ export async function checkAuth(request: Request): Promise<boolean> {
             credentials: "include",
         });
 
-        if (!authRes.ok) {
+        if (!res.ok) {
             return false;
         }
 
-        const data = await authRes.json();
+        const data = await res.json();
         return data.authorized === true;
     } catch (error) {
         return false;

@@ -29,13 +29,6 @@ export async function loader({
         },
     );
 
-    if (!res.ok) {
-        throw new Response("Failed to load case studies.", {
-            status: res.status,
-            statusText: res.statusText,
-        });
-    }
-
     const json: StrapiResponse<StrapiCaseStudy> = await res.json();
     const caseStudies = json.data.map((caseStudy) => {
         const categories = Array.isArray(caseStudy.categories)
