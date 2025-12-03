@@ -80,7 +80,7 @@ export default function DesignPage({ loaderData }: DesignPageProps) {
         <>
             <PageHeading heading="Design" />
             {!featuredCaseStudies.length ? (
-                <div className="-mt-6 lg:w-2/3 xl:w-1/2">
+                <div className="lg:w-2/3 xl:w-1/2">
                     <div className="divide-y divide-gray-300">
                         {caseStudies.map((caseStudy, i) => (
                             <CaseStudyEntry key={i} caseStudy={caseStudy} />
@@ -89,12 +89,13 @@ export default function DesignPage({ loaderData }: DesignPageProps) {
                 </div>
             ) : (
                 <>
-                    <div className="mb-12 grid gap-4">
+                    <div className="grid mb-4">
+                        <h2 className="text-2xl mb-8">Featured Work</h2>
                         {featuredCaseStudies.map((caseStudy, i) => (
                             <CaseStudyTile key={i} caseStudy={caseStudy} />
                         ))}
                     </div>
-                    <div className="mx-auto md:w-3/4 lg:w-1/2">
+                    <div className="lg:mx-auto lg:w-1/2">
                         <h2 className="text-2xl">Past Work</h2>
                         <div className="divide-y divide-gray-300">
                             {pastCaseStudies.map((caseStudy, i) => (

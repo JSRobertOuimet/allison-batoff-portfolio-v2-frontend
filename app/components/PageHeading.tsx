@@ -6,7 +6,7 @@ interface PageHeadingProps {
 const PageHeading = ({ heading = "Heading", alignment }: PageHeadingProps) => {
     return (
         <h1
-            className={`mb-8 ${alignment === "centered" ? "text-center" : ""} not-prose text-3xl text-balance`}
+            className={`mb-12 ${alignment === "centered" ? "text-center" : ""} not-prose text-3xl text-balance`}
         >
             {heading}
         </h1>

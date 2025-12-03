@@ -5,7 +5,7 @@ const CaseStudyEntry = ({ caseStudy }: { caseStudy: CaseStudyMeta }) => {
     return (
         <Link
             to={`/design/${caseStudy.slug}`}
-            className="block py-6 outline-offset-8"
+            className="block py-8 outline-offset-8"
         >
             <div>
                 <h3 className="mb-4 font-bold underline">{caseStudy.title}</h3>
