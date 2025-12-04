@@ -7,7 +7,7 @@ import {
     Form,
     Link,
 } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SubmitButton from "~/components/SubmitButton";
 
 export async function action({ request }: ActionFunctionArgs) {
@@ -31,7 +31,11 @@ export async function action({ request }: ActionFunctionArgs) {
 
         if (Array.isArray(setCookieHeader)) {
             const headers = new Headers();
-            for (const c of setCookieHeader) headers.append("Set-Cookie", c);
+
+            for (const cookie of setCookieHeader) {
+                headers.append("Set-Cookie", cookie);
+            }
+
             return redirect(redirectTo, { headers });
         }
 
@@ -62,19 +66,27 @@ export function meta({}: Route.MetaArgs) {
 export default function Login() {
     const actionData = useActionData() as { error?: string };
     const navigation = useNavigation().state;
-    const [clientError, setClientError] = useState<string>("");
+    const [errorMessage, setErrorMessage] = useState<string>("");
+
+    useEffect(() => {
+        if (actionData?.error) {
+            setErrorMessage(actionData.error);
+        }
+    }, [actionData]);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         const formData = new FormData(e.currentTarget);
         const password = formData.get("password") as string;
 
+        setErrorMessage("");
+
         if (!password || password.trim() === "") {
             e.preventDefault();
-            setClientError("Password is required.");
+
+            setErrorMessage("Password is required.");
+
             return;
         }
-
-        setClientError("");
     };
 
     return (
@@ -86,10 +98,8 @@ export default function Login() {
         >
             <h1 className="sr-only">Login</h1>
 
-            <p className="mb-8 text-center">
-                This is a password-protected section.
-                <br />
-                To get access, please{" "}
+            <p className="mb-8 text-center text-balance">
+                This is a password-protected section. To get access, please{" "}
                 <Link to="/contact" className="font-medium underline">
                     contact me
                 </Link>
@@ -104,12 +114,10 @@ export default function Login() {
                     name="password"
                     type="password"
                     id="password"
-                    className={`w-full border ${clientError || actionData?.error ? "border-2 border-red-600" : "border-gray-300"} px-3 py-2 outline-none focus:border-gray-500`}
+                    className={`w-full border ${errorMessage ? "border-2 border-red-600" : "border-gray-300"} px-3 py-2 outline-none focus:border-gray-500`}
                 />
-                {(clientError || actionData?.error) && (
-                    <p className="mt-1 text-sm text-red-600">
-                        {clientError || "Invalid password, please try again."}
-                    </p>
+                {errorMessage && (
+                    <p className="mt-1 text-sm text-red-600">{errorMessage}</p>
                 )}
             </div>
 
