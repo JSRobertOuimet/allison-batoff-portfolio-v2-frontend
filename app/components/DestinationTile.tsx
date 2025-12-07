@@ -12,7 +12,7 @@ const DestinationTile = ({ destination }: { destination: DestinationMeta }) => {
             </h2>
             <div className="absolute inset-0 bg-linear-to-tr from-black/30 to-white/10"></div>
             <img
-                src={destination.thumbnail.imageUrl}
+                src={destination.thumbnail.url}
                 alt={destination.thumbnail.alternativeText}
                 className="h-full w-full object-cover"
             />

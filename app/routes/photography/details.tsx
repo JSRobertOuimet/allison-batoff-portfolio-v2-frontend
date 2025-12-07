@@ -1,19 +1,25 @@
 import type { Route } from "./+types";
 import type {
-    Destination,
     StrapiResponse,
     StrapiDestination,
+    Destination,
 } from "~/types/types";
 import PageHeading from "~/components/PageHeading";
 import Pagination from "~/components/Pagination";
 
-type LoaderData = {
+type PhotographyDetailsPageProps = {
+    loaderData: {
+        destination: Destination;
+        previousDestination: Destination;
+        nextDestination: Destination;
+    };
+};
+
+export async function loader({ request, params }: Route.LoaderArgs): Promise<{
     destination: Destination;
     previousDestination: Destination;
     nextDestination: Destination;
-};
-
-export async function loader({ request, params }: Route.LoaderArgs) {
+}> {
     const { slug } = params as { slug: string };
 
     const response = await fetch(
@@ -30,12 +36,14 @@ export async function loader({ request, params }: Route.LoaderArgs) {
         description: destination.description,
         slug: destination.slug,
         thumbnail: {
-            imageUrl: destination.thumbnail.formats.large.url,
+            documentId: destination.thumbnail.documentId,
             alternativeText: destination.thumbnail.alternativeText,
+            url: destination.thumbnail.url,
         },
         photos: destination.photos.map((photo) => ({
-            imageUrl: photo.formats.large.url,
+            documentId: photo.documentId,
             alternativeText: photo.alternativeText,
+            url: photo.url,
         })),
     }));
     const currentIndex = destinations.findIndex(
@@ -49,9 +57,9 @@ export async function loader({ request, params }: Route.LoaderArgs) {
     return { destination, previousDestination, nextDestination };
 }
 
-export function meta({ data }: { data: LoaderData }) {
+export function meta({ loaderData }: PhotographyDetailsPageProps) {
     return [
-        { title: `${data.destination.location} | Allison Batoff` },
+        { title: `${loaderData.destination.location} | Allison Batoff` },
         {
             name: "description",
             content: "Portfolio of UX designer Allison Batoff.",
@@ -59,8 +67,11 @@ export function meta({ data }: { data: LoaderData }) {
     ];
 }
 
-const PhotographyDetailsPage = ({ loaderData }: { loaderData: LoaderData }) => {
+const PhotographyDetailsPage = ({
+    loaderData,
+}: PhotographyDetailsPageProps) => {
     const { destination, previousDestination, nextDestination } = loaderData;
+
     return (
         <>
             <PageHeading heading={destination.location} />
@@ -70,7 +81,7 @@ const PhotographyDetailsPage = ({ loaderData }: { loaderData: LoaderData }) => {
                     {destination.photos.map((photo) => (
                         <img
                             key={photo.documentId}
-                            src={photo.imageUrl}
+                            src={photo.url}
                             alt={photo.alternativeText}
                             className="mb-12 w-full"
                         />

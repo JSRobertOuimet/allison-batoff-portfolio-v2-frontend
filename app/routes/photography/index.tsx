@@ -26,11 +26,13 @@ export async function loader({
     );
     const json: StrapiResponse<StrapiDestination> = await response.json();
     const destinations = json.data.map((destination) => ({
-        location: destination.location,
+        documentId: destination.documentId,
         slug: destination.slug,
+        location: destination.location,
         thumbnail: {
-            imageUrl: destination.thumbnail.formats.large.url,
+            documentId: destination.thumbnail.documentId,
             alternativeText: destination.thumbnail.alternativeText,
+            url: destination.thumbnail.url,
         },
     }));
 
@@ -57,7 +59,7 @@ export default function PhotographyPage({ loaderData }: PhotographyPageProps) {
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {destinations.map((destination) => (
                     <DestinationTile
-                        key={destination.slug}
+                        key={destination.documentId}
                         destination={destination}
                     />
                 ))}

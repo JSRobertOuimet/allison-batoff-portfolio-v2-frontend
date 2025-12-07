@@ -1,92 +1,72 @@
+// General-purpose
+
 export type StrapiResponse<T> = {
     data: T[];
 };
 
-export type StrapiDestination = {
-    thumbnail: {
-        alternativeText: string;
-        formats: {
-            large: {
-                url: string;
-            };
-        };
-    };
-    location: string;
-    slug: string;
-    description: string;
-    photos: {
-        documentId: string;
-        alternativeText: string;
-        formats: {
-            large: {
-                url: string;
-            };
-        };
-    }[];
+export type Image = {
+    documentId: string;
+    alternativeText: string;
+    url: string;
 };
 
-export type StrapiCaseStudy = {
-    thumbnail?: {
-        url: any;
-        imageUrl: string;
-        alternativeText: string;
-    };
-    title: string;
-    slug: string;
+// Destinations
+
+export type StrapiDestination = {
+    documentId: string;
     description: string;
-    categories: {
-        category: string;
-    }[];
-    year: string;
-    duration: string;
-    audience: string;
-    isFeatured: boolean;
-    body: string;
+    slug: string;
+    location: string;
+    thumbnail: Image;
+    photos: Image[];
 };
 
 export type DestinationMeta = {
-    thumbnail: {
-        imageUrl: string;
-        alternativeText: string;
-    };
-    location: string;
+    documentId: string;
     slug: string;
+    location: string;
+    thumbnail: Image;
 };
 
 export type Destination = {
-    location: string;
-    slug: string;
     description: string;
-    photos: {
-        documentId: string;
-        imageUrl: string;
-        alternativeText: string;
+    slug: string;
+    location: string;
+    photos: Image[];
+};
+
+// Case Studies
+
+export type StrapiCaseStudy = {
+    title: string;
+    description: string;
+    body: string;
+    year: string;
+    slug: string;
+    duration: string;
+    audience: string;
+    isFeatured: boolean;
+    thumbnail: Image | null;
+    categories: {
+        category: string;
     }[];
 };
 
 export type CaseStudyMeta = {
-    thumbnail: {
-        imageUrl: string;
-        alternativeText: string;
-    } | null;
     title: string;
-    slug: string;
     description: string;
+    slug: string;
+    isFeatured: boolean;
+    thumbnail: Image | null;
     categories: {
         category: string;
     }[];
-    isFeatured: boolean;
 };
 
 export type CaseStudy = {
-    thumbnail: {
-        url: any;
-        imageUrl: string;
-        alternativeText: string;
-    };
     title: string;
-    slug: string;
     year: string;
+    slug: string;
     duration: string;
     audience: string;
     body: string;

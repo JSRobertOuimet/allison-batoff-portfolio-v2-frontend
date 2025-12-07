@@ -6,7 +6,7 @@ const CaseStudyTile = ({ caseStudy }: { caseStudy: CaseStudyMeta }) => {
         <Link to={`/design/${caseStudy.slug}`}>
             <div className="mb-8 flex flex-col gap-6 md:flex-row">
                 <img
-                    src={caseStudy.thumbnail?.imageUrl}
+                    src={caseStudy.thumbnail?.url}
                     alt={caseStudy.thumbnail?.alternativeText}
                     className="border border-gray-300 md:w-1/3"
                 />

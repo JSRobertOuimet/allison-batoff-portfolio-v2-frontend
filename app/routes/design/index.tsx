@@ -1,8 +1,8 @@
 import type { Route } from "../../+types/root";
 import type {
-    CaseStudyMeta,
     StrapiResponse,
     StrapiCaseStudy,
+    CaseStudyMeta,
 } from "~/types/types";
 import PageHeading from "~/components/PageHeading";
 import CaseStudyTile from "~/components/CaseStudyTile";
@@ -31,26 +31,21 @@ export async function loader({
 
     const json: StrapiResponse<StrapiCaseStudy> = await response.json();
     const caseStudies = json.data.map((caseStudy) => {
-        const categories = Array.isArray(caseStudy.categories)
-            ? caseStudy.categories
-            : [];
-
-        const thumbnail = caseStudy.thumbnail
-            ? {
-                  imageUrl: caseStudy.thumbnail.url ?? "",
-                  alternativeText: caseStudy.thumbnail.alternativeText ?? "",
-              }
-            : null;
-
         return {
             title: caseStudy.title,
-            slug: caseStudy.slug,
             description: caseStudy.description,
-            thumbnail,
+            slug: caseStudy.slug,
             isFeatured: caseStudy.isFeatured,
-            categories: categories.map((category) => ({
-                category: category.category,
-            })),
+            thumbnail: caseStudy.thumbnail
+                ? {
+                      documentId: caseStudy.thumbnail.documentId,
+                      alternativeText: caseStudy.thumbnail.alternativeText,
+                      url: caseStudy.thumbnail.url,
+                  }
+                : null,
+            categories: Array.isArray(caseStudy.categories)
+                ? caseStudy.categories
+                : [],
         };
     });
 
@@ -89,8 +84,8 @@ export default function DesignPage({ loaderData }: DesignPageProps) {
                 </div>
             ) : (
                 <>
-                    <div className="grid mb-4">
-                        <h2 className="text-2xl mb-8">Featured Work</h2>
+                    <div className="mb-4 grid">
+                        <h2 className="mb-8 text-2xl">Featured Work</h2>
                         {featuredCaseStudies.map((caseStudy, i) => (
                             <CaseStudyTile key={i} caseStudy={caseStudy} />
                         ))}
