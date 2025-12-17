@@ -8,23 +8,17 @@
         "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
-@utility prose {
-    blockquote {
-        p {
-            &:first-of-type::before,
-            &:last-of-type::after {
-                content: none;
-            }
-        }
-    }
-}
-
 html,
 body {
     @apply text-neutral-700;
 }
 
 @utility prose {
+    details {
+        margin-bottom: 2em;
+        cursor: pointer;
+    }
+
     blockquote {
         p {
             &:first-of-type::before,
