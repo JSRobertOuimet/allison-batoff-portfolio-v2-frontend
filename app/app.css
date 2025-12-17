@@ -21,6 +21,9 @@ body {
 @utility prose {
     details {
         margin-bottom: 2em;
+    }
+
+    summary {
         cursor: pointer;
     }
 
