@@ -11,6 +11,11 @@
 html,
 body {
     @apply text-neutral-700;
+
+    img {
+        user-select: none;
+        -webkit-touch-callout: none;
+    }
 }
 
 @utility prose {
