@@ -12,6 +12,15 @@ import "./app.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
+export const meta: Route.MetaFunction = () => [
+    { charSet: "utf-8" },
+    { name: "viewport", content: "width=device-width, initial-scale=1" },
+    {
+        name: "apple-mobile-web-app-title",
+        content: "Allison Batoff",
+    },
+];
+
 export const links: Route.LinksFunction = () => [
     { rel: "preconnect", href: "https://fonts.googleapis.com" },
     {
@@ -23,35 +32,52 @@ export const links: Route.LinksFunction = () => [
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
     },
+    {
+        rel: "icon",
+        type: "image/png",
+        href: "/favicon-96x96.png",
+        sizes: "96x96",
+    },
+    { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+    { rel: "shortcut icon", href: "/favicon.ico" },
+    {
+        rel: "apple-touch-icon",
+        sizes: "180x180",
+        href: "/apple-touch-icon.png",
+    },
+    { rel: "manifest", href: "/site.webmanifest" },
 ];
+
+export const scripts: Route.ScriptsFunction = () => {
+    const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+
+    if (!import.meta.env.PROD || !measurementId) {
+        return [];
+    }
+
+    return [
+        {
+            async: true,
+            src: `https://www.googletagmanager.com/gtag/js?id=${measurementId}`,
+        },
+        {
+            children: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){
+                    dataLayer.push(arguments);
+                }
+                gtag('js', new Date());
+
+                gtag('config', '${measurementId}');
+            `,
+        },
+    ];
+};
 
 export function Layout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
             <head>
-                <meta charSet="utf-8" />
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1"
-                />
-                <link
-                    rel="icon"
-                    type="image/png"
-                    href="/favicon-96x96.png"
-                    sizes="96x96"
-                />
-                <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-                <link rel="shortcut icon" href="/favicon.ico" />
-                <link
-                    rel="apple-touch-icon"
-                    sizes="180x180"
-                    href="/apple-touch-icon.png"
-                />
-                <meta
-                    name="apple-mobile-web-app-title"
-                    content="Allison Batoff"
-                />
-                <link rel="manifest" href="/site.webmanifest" />
                 <Meta />
                 <Links />
             </head>

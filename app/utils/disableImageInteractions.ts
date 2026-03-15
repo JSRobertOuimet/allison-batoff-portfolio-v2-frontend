@@ -1,23 +1,29 @@
 export function disableImageInteractions() {
-    const images = document.querySelectorAll("img");
-
     const preventContextMenu = (event: Event) => {
+        const target = event.target;
+
+        if (!(target instanceof Element) || !target.closest("img")) {
+            return;
+        }
+
         event.preventDefault();
     };
 
     const preventDrag = (event: Event) => {
+        const target = event.target;
+
+        if (!(target instanceof Element) || !target.closest("img")) {
+            return;
+        }
+
         event.preventDefault();
     };
 
-    images.forEach((image) => {
-        image.addEventListener("contextmenu", preventContextMenu);
-        image.addEventListener("dragstart", preventDrag);
-    });
+    document.addEventListener("contextmenu", preventContextMenu);
+    document.addEventListener("dragstart", preventDrag);
 
     return () => {
-        images.forEach((image) => {
-            image.removeEventListener("contextmenu", preventContextMenu);
-            image.removeEventListener("dragstart", preventDrag);
-        });
+        document.removeEventListener("contextmenu", preventContextMenu);
+        document.removeEventListener("dragstart", preventDrag);
     };
 }

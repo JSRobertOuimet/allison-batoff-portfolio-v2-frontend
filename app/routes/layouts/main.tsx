@@ -6,7 +6,7 @@ function MainLayout() {
     const location = useLocation();
 
     useEffect(() => {
-        disableImageInteractions();
+        return disableImageInteractions();
     }, [location.pathname]);
 
     return (
