@@ -48,38 +48,35 @@ export const links: Route.LinksFunction = () => [
     { rel: "manifest", href: "/site.webmanifest" },
 ];
 
-export const scripts: Route.ScriptsFunction = () => {
-    const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
-
-    if (!import.meta.env.PROD || !measurementId) {
-        return [];
-    }
-
-    return [
-        {
-            async: true,
-            src: `https://www.googletagmanager.com/gtag/js?id=${measurementId}`,
-        },
-        {
-            children: `
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){
-                    dataLayer.push(arguments);
-                }
-                gtag('js', new Date());
-
-                gtag('config', '${measurementId}');
-            `,
-        },
-    ];
-};
-
 export function Layout({ children }: { children: React.ReactNode }) {
+    const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+    const shouldLoadAnalytics = import.meta.env.PROD && Boolean(measurementId);
+
     return (
         <html lang="en">
             <head>
                 <Meta />
                 <Links />
+                {shouldLoadAnalytics && (
+                    <script
+                        async
+                        src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
+                    />
+                )}
+                {shouldLoadAnalytics && (
+                    <script
+                        dangerouslySetInnerHTML={{
+                            __html: `
+                                window.dataLayer = window.dataLayer || [];
+                                function gtag(){
+                                    dataLayer.push(arguments);
+                                }
+                                gtag('js', new Date());
+                                gtag('config', '${measurementId}');
+                            `,
+                        }}
+                    />
+                )}
             </head>
             <body className="h-[100vh]">
                 <Navbar />
